@@ -1,35 +1,1033 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stay Active | Log-In</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Stay Active | Login
+  </title>
+
+  <!-- QR SCANNER -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #000;
+
+    * {
+      box-sizing: border-box;
     }
 
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        #f3f3f3;
+
+      color:
+        #222;
+
     }
+
+
+    .container {
+
+      width: 100%;
+
+      max-width: 600px;
+
+      margin: auto;
+
+      padding: 20px;
+
+    }
+
+
+    /* ================================================
+       HEADER
+       ================================================ */
+
+    .header {
+
+      text-align: center;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .header h1 {
+
+      margin: 0;
+
+      font-size: 28px;
+
+      font-weight: 800;
+
+    }
+
+
+    .header p {
+
+      margin: 5px 0 0;
+
+      color: #777;
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+    }
+
+
+    /* ================================================
+       SCANNER
+       ================================================ */
+
+    .scanner-title {
+
+      text-align: center;
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    #reader {
+
+      width: 100%;
+
+      background: #000;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+
+    }
+
+
+    /* ================================================
+       STATUS
+       ================================================ */
+
+    #status {
+
+      text-align: center;
+
+      margin-top: 12px;
+
+      font-size: 14px;
+
+      color: #666;
+
+    }
+
+
+    /* ================================================
+       MEMBER CARD
+       ================================================ */
+
+    #memberCard {
+
+      display: none;
+
+      margin-top: 20px;
+
+      background: #fff;
+
+      border-radius: 18px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,0.10);
+
+    }
+
+
+    .success {
+
+      text-align: center;
+
+      font-size: 23px;
+
+      font-weight: bold;
+
+      margin-bottom: 6px;
+
+    }
+
+
+    .timestamp {
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 13px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 12px 0;
+
+      border-bottom:
+        1px solid #eee;
+
+    }
+
+
+    .label {
+
+      color: #777;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+    }
+
+
+    .value {
+
+      text-align: right;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      max-width: 60%;
+
+      word-break: break-word;
+
+    }
+
+
+    /* ================================================
+       ERROR
+       ================================================ */
+
+    #errorCard {
+
+      display: none;
+
+      margin-top: 20px;
+
+      background: #fff;
+
+      border-radius: 18px;
+
+      padding: 25px;
+
+      text-align: center;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,0.10);
+
+    }
+
+
+    .errorTitle {
+
+      font-size: 22px;
+
+      font-weight: bold;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .errorMessage {
+
+      color: #777;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    /* ================================================
+       BUTTON
+       ================================================ */
+
+    button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 10px;
+
+      padding: 14px;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      background: #222;
+
+      color: white;
+
+      cursor: pointer;
+
+    }
+
+
+    button:active {
+
+      transform: scale(0.98);
+
+    }
+
+
+    /* ================================================
+       MOBILE
+       ================================================ */
+
+    @media (
+      max-width: 480px
+    ) {
+
+      .container {
+
+        padding: 12px;
+
+      }
+
+
+      .header h1 {
+
+        font-size: 24px;
+
+      }
+
+
+      .row {
+
+        display: block;
+
+      }
+
+
+      .value {
+
+        max-width: 100%;
+
+        text-align: left;
+
+        margin-top: 4px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <iframe
-    src="https://script.google.com/macros/s/AKfycbxmExZ3kNnKXWs2ahZtISpDibCpEDLQLB7mq6WjtmdehP1iN7M8VQq2h5-RaX7lyVp2/exec"
-    allow="camera; microphone">
-  </iframe>
+
+<div class="container">
+
+
+  <!-- HEADER -->
+
+  <div class="header">
+
+    <h1>
+      STAY ACTIVE
+    </h1>
+
+    <p>
+      LIFESTYLE FITNESS GYM
+    </p>
+
+  </div>
+
+
+
+  <!-- SCANNER -->
+
+  <div id="scannerSection">
+
+    <div class="scanner-title">
+
+      SCAN MEMBER QR CODE
+
+    </div>
+
+
+    <div id="reader"></div>
+
+
+    <div id="status">
+
+      Starting camera...
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MEMBER RESULT -->
+
+  <div id="memberCard">
+
+
+    <div class="success">
+
+      LOGIN SUCCESSFUL
+
+    </div>
+
+
+    <div
+      id="timestamp"
+      class="timestamp">
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        MEMBER ID
+      </div>
+
+      <div
+        id="memberId"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        NAME
+      </div>
+
+      <div
+        id="name"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        CONTACT
+      </div>
+
+      <div
+        id="contact"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        ANNUAL MEMBERSHIP
+      </div>
+
+      <div
+        id="annualMembership"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        GYM WORKOUT PLAN
+      </div>
+
+      <div
+        id="workoutPlan"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        GYM WORKOUT PLAN CREDIT
+      </div>
+
+      <div
+        id="workoutCredit"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="label">
+        LOCKER RENTAL CREDIT
+      </div>
+
+      <div
+        id="lockerCredit"
+        class="value">
+      </div>
+
+    </div>
+
+
+
+    <br>
+
+
+    <button
+      onclick="scanNext()">
+
+      SCAN NEXT MEMBER
+
+    </button>
+
+
+  </div>
+
+
+
+  <!-- ERROR -->
+
+  <div id="errorCard">
+
+
+    <div class="errorTitle">
+
+      LOGIN FAILED
+
+    </div>
+
+
+    <div
+      id="errorMessage"
+      class="errorMessage">
+    </div>
+
+
+    <button
+      onclick="scanNext()">
+
+      TRY AGAIN
+
+    </button>
+
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   APPS SCRIPT API
+   ===================================================== */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxmExZ3kNnKXWs2ahZtISpDibCpEDLQLB7mq6WjtmdehP1iN7M8VQq2h5-RaX7lyVp2/exec";
+
+
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
+let scanner = null;
+
+let scanning = false;
+
+let processing = false;
+
+
+
+/* =====================================================
+   START SCANNER
+   ===================================================== */
+
+function startScanner() {
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Starting camera...";
+
+
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  const config = {
+
+    fps: 10,
+
+    qrbox: function(
+      width,
+      height
+    ) {
+
+      const size =
+        Math.min(
+          width,
+          height
+        ) * 0.70;
+
+
+      return {
+
+        width: size,
+
+        height: size
+
+      };
+
+    }
+
+  };
+
+
+  scanner
+    .start(
+
+      {
+        facingMode:
+          "environment"
+      },
+
+      config,
+
+      onScanSuccess,
+
+      onScanFailure
+
+    )
+
+    .then(function() {
+
+      scanning = true;
+
+      document
+        .getElementById("status")
+        .textContent =
+          "Ready — scan member QR code";
+
+    })
+
+    .catch(function(error) {
+
+      console.error(error);
+
+
+      document
+        .getElementById("status")
+        .textContent =
+          "Camera access is required.";
+
+    });
+
+}
+
+
+
+/* =====================================================
+   QR SUCCESS
+   ===================================================== */
+
+function onScanSuccess(
+  decodedText
+) {
+
+
+  if (processing) {
+
+    return;
+
+  }
+
+
+  processing = true;
+
+
+  const memberId =
+    String(decodedText || '')
+      .trim();
+
+
+  if (!memberId) {
+
+    processing = false;
+
+    return;
+
+  }
+
+
+  stopScanner();
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Processing login...";
+
+
+  /*
+   * CALL APPS SCRIPT API
+   */
+
+  const url =
+    API_URL +
+    "?memberId=" +
+    encodeURIComponent(
+      memberId
+    );
+
+
+  fetch(url)
+
+    .then(function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Network error"
+        );
+
+      }
+
+
+      return response.json();
+
+    })
+
+    .then(function(data) {
+
+      handleResult(data);
+
+    })
+
+    .catch(function(error) {
+
+      console.error(error);
+
+
+      showError(
+        "Unable to connect to the Login Server."
+      );
+
+    });
+
+}
+
+
+
+/* =====================================================
+   HANDLE API RESULT
+   ===================================================== */
+
+function handleResult(
+  data
+) {
+
+
+  if (!data) {
+
+    showError(
+      "No response received."
+    );
+
+    return;
+
+  }
+
+
+  if (!data.success) {
+
+    showError(
+      data.message ||
+      "Member login failed."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * MEMBER INFORMATION
+   */
+
+  document
+    .getElementById("memberId")
+    .textContent =
+      data.memberId || "";
+
+
+  document
+    .getElementById("name")
+    .textContent =
+      data.name || "";
+
+
+  document
+    .getElementById("contact")
+    .textContent =
+      data.contact || "";
+
+
+  document
+    .getElementById("annualMembership")
+    .textContent =
+      data.annualMembership || "";
+
+
+  document
+    .getElementById("workoutPlan")
+    .textContent =
+      data.workoutPlan || "";
+
+
+  document
+    .getElementById("workoutCredit")
+    .textContent =
+      data.workoutCredit ?? 0;
+
+
+  document
+    .getElementById("lockerCredit")
+    .textContent =
+      data.lockerCredit ?? 0;
+
+
+  document
+    .getElementById("timestamp")
+    .textContent =
+      data.timestamp || "";
+
+
+  /*
+   * SHOW MEMBER CARD
+   */
+
+  document
+    .getElementById("memberCard")
+    .style.display =
+      "block";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "";
+
+}
+
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+function showError(
+  message
+) {
+
+
+  document
+    .getElementById("errorMessage")
+    .textContent =
+      message;
+
+
+  document
+    .getElementById("errorCard")
+    .style.display =
+      "block";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "";
+
+}
+
+
+
+/* =====================================================
+   STOP SCANNER
+   ===================================================== */
+
+function stopScanner() {
+
+
+  if (
+    scanner &&
+    scanning
+  ) {
+
+    scanner
+      .stop()
+
+      .then(function() {
+
+        scanning = false;
+
+      })
+
+      .catch(function(error) {
+
+        console.log(error);
+
+        scanning = false;
+
+      });
+
+  }
+
+}
+
+
+
+/* =====================================================
+   SCAN NEXT MEMBER
+   ===================================================== */
+
+function scanNext() {
+
+
+  processing = false;
+
+
+  /*
+   * Hide cards
+   */
+
+  document
+    .getElementById("memberCard")
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById("errorCard")
+    .style.display =
+      "none";
+
+
+  /*
+   * Clear previous scanner
+   */
+
+  if (scanner) {
+
+    try {
+
+      scanner.clear();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
+
+
+  /*
+   * Start new scanner
+   */
+
+  setTimeout(
+    function() {
+
+      startScanner();
+
+    },
+    300
+  );
+
+}
+
+
+
+/* =====================================================
+   START WHEN PAGE LOADS
+   ===================================================== */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    startScanner();
+
+  }
+);
+
+
+</script>
+
 
 </body>
+
 </html>
