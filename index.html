@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
 
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1">
 
   <title>Stay Active QR Login</title>
 
@@ -20,7 +20,6 @@
 
     body {
       margin: 0;
-      padding: 0;
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
@@ -35,7 +34,7 @@
     }
 
     h1 {
-      margin: 5px 0;
+      margin-bottom: 5px;
       font-size: 30px;
     }
 
@@ -44,16 +43,11 @@
       margin-bottom: 20px;
     }
 
-    h2 {
-      margin: 10px 0 20px;
-    }
-
     #reader {
       width: 100%;
       background: #000;
       border-radius: 15px;
       overflow: hidden;
-      min-height: 100px;
     }
 
     button {
@@ -89,10 +83,6 @@
       background: #8b1111;
     }
 
-    .success {
-      background: #075c31;
-    }
-
     .member {
       display: none;
       margin-top: 20px;
@@ -121,7 +111,7 @@
     }
 
     .info-row {
-      padding: 13px 5px;
+      padding: 14px 5px;
       border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
@@ -130,24 +120,15 @@
     }
 
     .info-label {
-      font-size: 12px;
+      font-size: 13px;
       color: #ccc;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .info-value {
       font-size: 20px;
       font-weight: bold;
       margin-top: 5px;
-    }
-
-    .credit-value {
-      font-size: 24px;
-    }
-
-    .login-time {
-      font-size: 16px;
     }
 
   </style>
@@ -173,11 +154,10 @@
   <div id="reader"></div>
 
 
-  <!-- START CAMERA -->
+  <!-- START -->
 
-  <button
-    id="startButton"
-    onclick="startScanner()">
+  <button id="startButton"
+          onclick="startScanner()">
 
     📷 START SCANNER
 
@@ -186,71 +166,36 @@
 
   <!-- STATUS -->
 
-  <div
-    id="status"
-    class="status">
+  <div id="status"
+       class="status">
 
     Press START SCANNER
 
   </div>
 
 
-  <!-- =========================================
-       MEMBER INFORMATION
-  ========================================== -->
+  <!-- MEMBER INFORMATION -->
 
-  <div
-    id="member"
-    class="member">
+  <div id="member"
+       class="member">
 
     <h2>✅ LOGIN SUCCESSFUL</h2>
 
 
-    <!-- NAME -->
-
-    <div
-      class="member-name"
-      id="memberName">
-
-      -
-
+    <div class="member-name"
+         id="memberName">
     </div>
 
 
-    <!-- MEMBER ID -->
-
-    <div
-      class="member-id"
-      id="memberId">
-
-      -
-
+    <div class="member-id"
+         id="memberId">
     </div>
 
 
     <div class="info-box">
 
 
-      <!-- CONTACT NUMBER -->
-
-      <div class="info-row">
-
-        <div class="info-label">
-          Contact Number
-        </div>
-
-        <div
-          class="info-value"
-          id="contact">
-
-          -
-
-        </div>
-
-      </div>
-
-
-      <!-- ANNUAL MEMBERSHIP CREDIT -->
+      <!-- ANNUAL MEMBERSHIP -->
 
       <div class="info-row">
 
@@ -258,18 +203,15 @@
           Annual Membership Credit
         </div>
 
-        <div
-          class="info-value credit-value"
-          id="annualCredit">
-
+        <div class="info-value"
+             id="annualCredit">
           -
-
         </div>
 
       </div>
 
 
-      <!-- GYM WORKOUT PLAN CREDIT -->
+      <!-- WORKOUT PLAN CREDIT -->
 
       <div class="info-row">
 
@@ -277,18 +219,15 @@
           Gym Workout Plan Credit
         </div>
 
-        <div
-          class="info-value credit-value"
-          id="workoutCredit">
-
+        <div class="info-value"
+             id="workoutCredit">
           -
-
         </div>
 
       </div>
 
 
-      <!-- LOCKER RENTAL CREDIT -->
+      <!-- LOCKER -->
 
       <div class="info-row">
 
@@ -296,18 +235,15 @@
           Locker Rental Credit
         </div>
 
-        <div
-          class="info-value credit-value"
-          id="lockerCredit">
-
+        <div class="info-value"
+             id="lockerCredit">
           -
-
         </div>
 
       </div>
 
 
-      <!-- LOGIN TIMESTAMP -->
+      <!-- LOGIN TIME -->
 
       <div class="info-row">
 
@@ -315,12 +251,9 @@
           Login Time
         </div>
 
-        <div
-          class="info-value login-time"
-          id="loginTime">
-
+        <div class="info-value"
+             id="loginTime">
           -
-
         </div>
 
       </div>
@@ -331,13 +264,12 @@
   </div>
 
 
-  <!-- SCAN NEXT MEMBER -->
+  <!-- SCAN AGAIN -->
 
-  <button
-    id="scanAgain"
-    onclick="resetScanner()">
+  <button id="scanAgain"
+          onclick="resetScanner()">
 
-    🔄 SCAN NEXT MEMBER
+    📷 SCAN NEXT MEMBER
 
   </button>
 
@@ -349,19 +281,13 @@
 
 /*
 =================================================
-GOOGLE APPS SCRIPT
+YOUR NEW WORKING APPS SCRIPT URL
 =================================================
 */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxCAtD7sB_qdgt6gLdp44cc2tR-TlW3ca0aYbqxg3lRGWuAoU_OQYrOgXojZTAe0AqU/exec";
+"https://script.google.com/macros/s/AKfycbxdsCpfbiwcsWbhHN0mM7O5CkAjBNSzo4lapNmrywVTcPmEuCCQ4EfrXGhlQy8Oy_HL/exec";
 
-
-/*
-=================================================
-VARIABLES
-=================================================
-*/
 
 let scanner = null;
 
@@ -414,6 +340,7 @@ function startScanner() {
     },
 
     {
+
       fps: 10,
 
       qrbox: {
@@ -432,7 +359,7 @@ function startScanner() {
   .then(function() {
 
     showStatus(
-      "📷 Point the camera at the member QR Code"
+      "📷 Scan Member QR Code"
     );
 
   })
@@ -455,7 +382,7 @@ function startScanner() {
 
 /*
 =================================================
-QR CODE SCANNED
+QR CODE SUCCESS
 =================================================
 */
 
@@ -512,17 +439,10 @@ LOGIN MEMBER
 
 function loginMember(memberId) {
 
-
   const callbackName =
     "loginCallback_" +
     Date.now();
 
-
-  /*
-  ===============================================
-  JSONP CALLBACK
-  ===============================================
-  */
 
   window[callbackName] =
     function(result) {
@@ -533,24 +453,18 @@ function loginMember(memberId) {
       delete window[callbackName];
 
 
-      const script =
+      const oldScript =
         document.getElementById(
           callbackName
         );
 
 
-      if (script) {
-        script.remove();
+      if (oldScript) {
+        oldScript.remove();
       }
 
     };
 
-
-  /*
-  ===============================================
-  CREATE SCRIPT REQUEST
-  ===============================================
-  */
 
   const script =
     document.createElement("script");
@@ -560,6 +474,11 @@ function loginMember(memberId) {
     callbackName;
 
 
+  /*
+  IMPORTANT:
+  JSONP CALLBACK
+  */
+
   script.src =
     API_URL +
     "?action=login" +
@@ -568,12 +487,6 @@ function loginMember(memberId) {
     "&callback=" +
     callbackName;
 
-
-  /*
-  ===============================================
-  ERROR
-  ===============================================
-  */
 
   script.onerror =
     function() {
@@ -607,7 +520,7 @@ function loginMember(memberId) {
 
 /*
 =================================================
-HANDLE LOGIN RESULT
+DISPLAY RESULT
 =================================================
 */
 
@@ -619,16 +532,8 @@ function handleLogin(result) {
   );
 
 
-  /*
-  ===============================================
-  LOGIN FAILED
-  ===============================================
-  */
-
-  if (
-    !result ||
-    !result.success
-  ) {
+  if (!result ||
+      !result.success) {
 
     showError(
       result && result.message
@@ -652,9 +557,7 @@ function handleLogin(result) {
 
 
   /*
-  ===============================================
   HIDE STATUS
-  ===============================================
   */
 
   document.getElementById(
@@ -664,9 +567,7 @@ function handleLogin(result) {
 
 
   /*
-  ===============================================
-  SHOW MEMBER CARD
-  ===============================================
+  SHOW MEMBER
   */
 
   document.getElementById(
@@ -676,168 +577,139 @@ function handleLogin(result) {
 
 
   /*
-  ===============================================
+  ==========================================
   NAME
-  ===============================================
+  ==========================================
   */
 
   document.getElementById(
     "memberName"
   ).innerText =
-    displayValue(
-      result.name
-    );
+    result.name || "-";
 
 
   /*
-  ===============================================
+  ==========================================
   MEMBER ID
-  ===============================================
+  ==========================================
   */
 
   document.getElementById(
     "memberId"
   ).innerText =
-    displayValue(
-      result.memberId
-    );
+    result.memberId || "-";
 
 
   /*
-  ===============================================
-  CONTACT
-  ===============================================
-  */
-
-  document.getElementById(
-    "contact"
-  ).innerText =
-    displayValue(
-      result.contact
-    );
-
-
-  /*
-  ===============================================
+  ==========================================
   ANNUAL MEMBERSHIP CREDIT
-  ===============================================
+  ==========================================
   */
 
   document.getElementById(
     "annualCredit"
   ).innerText =
-    displayCredit(
-      result.annualCredit
-    );
+    result.annualCredit !== undefined &&
+    result.annualCredit !== ""
+      ? result.annualCredit + " Days"
+      : "N/A";
 
 
   /*
-  ===============================================
-  GYM WORKOUT PLAN CREDIT
-  ===============================================
+  ==========================================
+  WORKOUT PLAN CREDIT
+  ==========================================
   */
 
-  document.getElementById(
-    "workoutCredit"
-  ).innerText =
-    displayCredit(
-      result.workoutCredit
-    );
+  if (
+    result.workoutCredit !== undefined &&
+    result.workoutCredit !== ""
+  ) {
+
+    if (
+      String(result.workoutCredit)
+        .toLowerCase()
+        .includes("credit")
+    ) {
+
+      document.getElementById(
+        "workoutCredit"
+      ).innerText =
+        result.workoutCredit;
+
+    }
+
+    else {
+
+      document.getElementById(
+        "workoutCredit"
+      ).innerText =
+        result.workoutCredit + " Credit";
+
+    }
+
+  }
+
+  else {
+
+    document.getElementById(
+      "workoutCredit"
+    ).innerText =
+      "N/A";
+
+  }
 
 
   /*
-  ===============================================
+  ==========================================
   LOCKER RENTAL CREDIT
-  ===============================================
+  ==========================================
   */
 
-  document.getElementById(
-    "lockerCredit"
-  ).innerText =
-    displayCredit(
-      result.lockerCredit
-    );
+  if (
+    result.lockerCredit !== undefined &&
+    result.lockerCredit !== ""
+  ) {
+
+    document.getElementById(
+      "lockerCredit"
+    ).innerText =
+      result.lockerCredit;
+
+  }
+
+  else {
+
+    document.getElementById(
+      "lockerCredit"
+    ).innerText =
+      "N/A";
+
+  }
 
 
   /*
-  ===============================================
-  LOGIN TIMESTAMP
-  ===============================================
+  ==========================================
+  LOGIN TIME
+  ==========================================
   */
 
   document.getElementById(
     "loginTime"
   ).innerText =
-    displayValue(
-      result.timestamp
-    );
+    result.timestamp || "-";
 
 
   /*
-  ===============================================
-  SHOW SCAN AGAIN
-  ===============================================
+  ==========================================
+  SCAN AGAIN
+  ==========================================
   */
 
   document.getElementById(
     "scanAgain"
   ).style.display =
     "block";
-
-}
-
-
-/*
-=================================================
-DISPLAY NORMAL VALUE
-=================================================
-*/
-
-function displayValue(value) {
-
-  if (
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
-
-    return "N/A";
-
-  }
-
-  return String(value);
-
-}
-
-
-/*
-=================================================
-DISPLAY CREDIT
-=================================================
-*/
-
-function displayCredit(value) {
-
-  if (
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
-
-    return "N/A";
-
-  }
-
-
-  /*
-  No calculation.
-
-  This simply displays
-  whatever Apps Script
-  returned from DATA.
-  */
-
-  return String(value);
 
 }
 
@@ -872,9 +744,9 @@ function resetScanner() {
 
 
   document.getElementById(
-    "reader"
-  ).innerHTML =
-    "";
+    "status"
+  ).style.display =
+    "block";
 
 
   showStatus(
@@ -942,16 +814,13 @@ function showError(message) {
 
 /*
 =================================================
-NORMAL SCANNER ERRORS
+IGNORE NORMAL QR ERRORS
 =================================================
 */
 
 function onScanError(errorMessage) {
 
-  /*
-  Normal QR scanning errors
-  are ignored.
-  */
+  // Normal QR scanning errors are ignored.
 
 }
 
