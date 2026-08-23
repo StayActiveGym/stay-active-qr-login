@@ -10,12 +10,13 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Stay Active | Login
-  </title>
+  <title>Stay Active | Login</title>
 
-  <!-- QR SCANNER -->
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <!-- QR SCANNER LIBRARY -->
+  <script
+    src="https://unpkg.com/html5-qrcode"
+    type="text/javascript">
+  </script>
 
 
   <style>
@@ -26,9 +27,7 @@
 
 
     body {
-
       margin: 0;
-
       min-height: 100vh;
 
       font-family:
@@ -36,54 +35,40 @@
         Helvetica,
         sans-serif;
 
-      background:
-        #f3f3f3;
-
-      color:
-        #222;
-
+      background: #f3f3f3;
+      color: #222;
     }
 
 
     .container {
-
       width: 100%;
-
       max-width: 600px;
 
-      margin: auto;
+      margin: 0 auto;
 
       padding: 20px;
-
     }
 
 
-    /* ================================================
+    /* ==========================================
        HEADER
-       ================================================ */
+       ========================================== */
 
     .header {
-
       text-align: center;
-
       margin-bottom: 20px;
-
     }
 
 
     .header h1 {
-
       margin: 0;
 
       font-size: 28px;
-
       font-weight: 800;
-
     }
 
 
     .header p {
-
       margin: 5px 0 0;
 
       color: #777;
@@ -91,16 +76,14 @@
       font-size: 14px;
 
       letter-spacing: 1px;
-
     }
 
 
-    /* ================================================
+    /* ==========================================
        SCANNER
-       ================================================ */
+       ========================================== */
 
     .scanner-title {
-
       text-align: center;
 
       font-size: 18px;
@@ -108,12 +91,10 @@
       font-weight: bold;
 
       margin-bottom: 12px;
-
     }
 
 
     #reader {
-
       width: 100%;
 
       background: #000;
@@ -121,16 +102,10 @@
       border-radius: 16px;
 
       overflow: hidden;
-
     }
 
 
-    /* ================================================
-       STATUS
-       ================================================ */
-
     #status {
-
       text-align: center;
 
       margin-top: 12px;
@@ -138,16 +113,14 @@
       font-size: 14px;
 
       color: #666;
-
     }
 
 
-    /* ================================================
+    /* ==========================================
        MEMBER CARD
-       ================================================ */
+       ========================================== */
 
     #memberCard {
-
       display: none;
 
       margin-top: 20px;
@@ -160,12 +133,10 @@
 
       box-shadow:
         0 5px 20px rgba(0,0,0,0.10);
-
     }
 
 
     .success {
-
       text-align: center;
 
       font-size: 23px;
@@ -173,12 +144,10 @@
       font-weight: bold;
 
       margin-bottom: 6px;
-
     }
 
 
     .timestamp {
-
       text-align: center;
 
       color: #777;
@@ -186,15 +155,15 @@
       font-size: 13px;
 
       margin-bottom: 20px;
-
     }
 
 
     .row {
-
       display: flex;
 
       justify-content: space-between;
+
+      align-items: flex-start;
 
       gap: 15px;
 
@@ -202,42 +171,38 @@
 
       border-bottom:
         1px solid #eee;
-
     }
 
 
     .label {
-
       color: #777;
 
       font-size: 13px;
 
       font-weight: bold;
 
+      flex: 1;
     }
 
 
     .value {
-
       text-align: right;
 
       font-size: 15px;
 
       font-weight: bold;
 
-      max-width: 60%;
+      flex: 1.5;
 
       word-break: break-word;
-
     }
 
 
-    /* ================================================
-       ERROR
-       ================================================ */
+    /* ==========================================
+       ERROR CARD
+       ========================================== */
 
     #errorCard {
-
       display: none;
 
       margin-top: 20px;
@@ -252,36 +217,30 @@
 
       box-shadow:
         0 5px 20px rgba(0,0,0,0.10);
-
     }
 
 
     .errorTitle {
-
       font-size: 22px;
 
       font-weight: bold;
 
       margin-bottom: 8px;
-
     }
 
 
     .errorMessage {
-
       color: #777;
 
       margin-bottom: 20px;
-
     }
 
 
-    /* ================================================
+    /* ==========================================
        BUTTON
-       ================================================ */
+       ========================================== */
 
     button {
-
       width: 100%;
 
       border: none;
@@ -299,54 +258,39 @@
       color: white;
 
       cursor: pointer;
-
     }
 
 
     button:active {
-
       transform: scale(0.98);
-
     }
 
 
-    /* ================================================
+    /* ==========================================
        MOBILE
-       ================================================ */
+       ========================================== */
 
-    @media (
-      max-width: 480px
-    ) {
+    @media (max-width: 480px) {
 
       .container {
-
         padding: 12px;
-
       }
 
 
       .header h1 {
-
         font-size: 24px;
-
       }
 
 
       .row {
-
         display: block;
-
       }
 
 
       .value {
-
-        max-width: 100%;
-
         text-align: left;
 
         margin-top: 4px;
-
       }
 
     }
@@ -362,7 +306,9 @@
 <div class="container">
 
 
-  <!-- HEADER -->
+  <!-- ==========================================
+       HEADER
+       ========================================== -->
 
   <div class="header">
 
@@ -377,15 +323,14 @@
   </div>
 
 
-
-  <!-- SCANNER -->
+  <!-- ==========================================
+       SCANNER
+       ========================================== -->
 
   <div id="scannerSection">
 
     <div class="scanner-title">
-
       SCAN MEMBER QR CODE
-
     </div>
 
 
@@ -393,24 +338,21 @@
 
 
     <div id="status">
-
       Starting camera...
-
     </div>
 
   </div>
 
 
-
-  <!-- MEMBER RESULT -->
+  <!-- ==========================================
+       MEMBER RESULT
+       ========================================== -->
 
   <div id="memberCard">
 
 
     <div class="success">
-
       LOGIN SUCCESSFUL
-
     </div>
 
 
@@ -418,7 +360,6 @@
       id="timestamp"
       class="timestamp">
     </div>
-
 
 
     <div class="row">
@@ -435,7 +376,6 @@
     </div>
 
 
-
     <div class="row">
 
       <div class="label">
@@ -448,7 +388,6 @@
       </div>
 
     </div>
-
 
 
     <div class="row">
@@ -465,7 +404,6 @@
     </div>
 
 
-
     <div class="row">
 
       <div class="label">
@@ -478,7 +416,6 @@
       </div>
 
     </div>
-
 
 
     <div class="row">
@@ -495,7 +432,6 @@
     </div>
 
 
-
     <div class="row">
 
       <div class="label">
@@ -508,7 +444,6 @@
       </div>
 
     </div>
-
 
 
     <div class="row">
@@ -525,7 +460,6 @@
     </div>
 
 
-
     <br>
 
 
@@ -540,16 +474,15 @@
   </div>
 
 
-
-  <!-- ERROR -->
+  <!-- ==========================================
+       ERROR
+       ========================================== -->
 
   <div id="errorCard">
 
 
     <div class="errorTitle">
-
       LOGIN FAILED
-
     </div>
 
 
@@ -578,7 +511,7 @@
 
 
 /* =====================================================
-   APPS SCRIPT API
+   GOOGLE APPS SCRIPT API
    ===================================================== */
 
 const API_URL =
@@ -604,11 +537,13 @@ let processing = false;
 
 function startScanner() {
 
+  processing = false;
+
 
   document
     .getElementById("status")
     .textContent =
-      "Starting camera...";
+      "Requesting camera access...";
 
 
   scanner =
@@ -617,54 +552,135 @@ function startScanner() {
     );
 
 
-  const config = {
+  /*
+   * GET AVAILABLE CAMERAS
+   */
 
-    fps: 10,
+  Html5Qrcode
+    .getCameras()
 
-    qrbox: function(
-      width,
-      height
-    ) {
+    .then(function(cameras) {
 
-      const size =
-        Math.min(
+
+      if (
+        !cameras ||
+        cameras.length === 0
+      ) {
+
+        throw new Error(
+          "No camera was detected."
+        );
+
+      }
+
+
+      /*
+       * DEFAULT CAMERA
+       */
+
+      let cameraId =
+        cameras[0].id;
+
+
+      /*
+       * FIND REAR CAMERA
+       */
+
+      for (
+        let i = 0;
+        i < cameras.length;
+        i++
+      ) {
+
+        const label =
+          (
+            cameras[i].label ||
+            ""
+          ).toLowerCase();
+
+
+        if (
+          label.includes("back") ||
+          label.includes("rear") ||
+          label.includes("environment")
+        ) {
+
+          cameraId =
+            cameras[i].id;
+
+          break;
+
+        }
+
+      }
+
+
+      /*
+       * SCANNER CONFIG
+       */
+
+      const config = {
+
+        fps: 10,
+
+        qrbox: function(
           width,
           height
-        ) * 0.70;
+        ) {
+
+          const size =
+            Math.floor(
+              Math.min(
+                width,
+                height
+              ) * 0.70
+            );
 
 
-      return {
+          return {
 
-        width: size,
+            width: size,
 
-        height: size
+            height: size
+
+          };
+
+        },
+
+        aspectRatio: 1.0
 
       };
 
-    }
 
-  };
+      document
+        .getElementById("status")
+        .textContent =
+          "Opening camera...";
 
 
-  scanner
-    .start(
+      /*
+       * START CAMERA
+       */
 
-      {
-        facingMode:
-          "environment"
-      },
+      return scanner.start(
 
-      config,
+        cameraId,
 
-      onScanSuccess,
+        config,
 
-      onScanFailure
+        onScanSuccess,
 
-    )
+        onScanFailure
+
+      );
+
+    })
+
 
     .then(function() {
 
       scanning = true;
+
 
       document
         .getElementById("status")
@@ -673,15 +689,24 @@ function startScanner() {
 
     })
 
+
     .catch(function(error) {
 
-      console.error(error);
+      console.error(
+        "Camera error:",
+        error
+      );
 
 
       document
         .getElementById("status")
         .textContent =
-          "Camera access is required.";
+          "Camera could not start.";
+
+
+      showError(
+        "Camera could not start. Please allow camera permission and reload the page."
+      );
 
     });
 
@@ -690,11 +715,12 @@ function startScanner() {
 
 
 /* =====================================================
-   QR SUCCESS
+   QR SCAN SUCCESS
    ===================================================== */
 
 function onScanSuccess(
-  decodedText
+  decodedText,
+  decodedResult
 ) {
 
 
@@ -709,8 +735,9 @@ function onScanSuccess(
 
 
   const memberId =
-    String(decodedText || '')
-      .trim();
+    String(
+      decodedText || ""
+    ).trim();
 
 
   if (!memberId) {
@@ -722,6 +749,10 @@ function onScanSuccess(
   }
 
 
+  /*
+   * STOP CAMERA
+   */
+
   stopScanner();
 
 
@@ -732,7 +763,7 @@ function onScanSuccess(
 
 
   /*
-   * CALL APPS SCRIPT API
+   * BUILD API URL
    */
 
   const url =
@@ -743,6 +774,10 @@ function onScanSuccess(
     );
 
 
+  /*
+   * CALL APPS SCRIPT
+   */
+
   fetch(url)
 
     .then(function(response) {
@@ -750,7 +785,8 @@ function onScanSuccess(
       if (!response.ok) {
 
         throw new Error(
-          "Network error"
+          "Network error: " +
+          response.status
         );
 
       }
@@ -760,15 +796,20 @@ function onScanSuccess(
 
     })
 
+
     .then(function(data) {
 
       handleResult(data);
 
     })
 
+
     .catch(function(error) {
 
-      console.error(error);
+      console.error(
+        "API error:",
+        error
+      );
 
 
       showError(
@@ -776,6 +817,20 @@ function onScanSuccess(
       );
 
     });
+
+}
+
+
+
+/* =====================================================
+   QR SCAN FAILURE
+   ===================================================== */
+
+function onScanFailure(error) {
+
+  /*
+   * Normal scanning failures are ignored.
+   */
 
 }
 
@@ -793,7 +848,7 @@ function handleResult(
   if (!data) {
 
     showError(
-      "No response received."
+      "No response received from the server."
     );
 
     return;
@@ -814,7 +869,7 @@ function handleResult(
 
 
   /*
-   * MEMBER INFORMATION
+   * MEMBER ID
    */
 
   document
@@ -823,11 +878,19 @@ function handleResult(
       data.memberId || "";
 
 
+  /*
+   * NAME
+   */
+
   document
     .getElementById("name")
     .textContent =
       data.name || "";
 
+
+  /*
+   * CONTACT
+   */
 
   document
     .getElementById("contact")
@@ -835,11 +898,19 @@ function handleResult(
       data.contact || "";
 
 
+  /*
+   * ANNUAL MEMBERSHIP
+   */
+
   document
     .getElementById("annualMembership")
     .textContent =
       data.annualMembership || "";
 
+
+  /*
+   * WORKOUT PLAN
+   */
 
   document
     .getElementById("workoutPlan")
@@ -847,17 +918,29 @@ function handleResult(
       data.workoutPlan || "";
 
 
+  /*
+   * WORKOUT CREDIT
+   */
+
   document
     .getElementById("workoutCredit")
     .textContent =
       data.workoutCredit ?? 0;
 
 
+  /*
+   * LOCKER CREDIT
+   */
+
   document
     .getElementById("lockerCredit")
     .textContent =
       data.lockerCredit ?? 0;
 
+
+  /*
+   * TIMESTAMP
+   */
 
   document
     .getElementById("timestamp")
@@ -885,7 +968,7 @@ function handleResult(
 
 
 /* =====================================================
-   ERROR
+   SHOW ERROR
    ===================================================== */
 
 function showError(
@@ -937,7 +1020,10 @@ function stopScanner() {
 
       .catch(function(error) {
 
-        console.log(error);
+        console.log(
+          "Stop scanner error:",
+          error
+        );
 
         scanning = false;
 
@@ -960,7 +1046,7 @@ function scanNext() {
 
 
   /*
-   * Hide cards
+   * HIDE RESULT
    */
 
   document
@@ -976,7 +1062,7 @@ function scanNext() {
 
 
   /*
-   * Clear previous scanner
+   * CLEAR OLD SCANNER
    */
 
   if (scanner) {
@@ -995,7 +1081,7 @@ function scanNext() {
 
 
   /*
-   * Start new scanner
+   * START AGAIN
    */
 
   setTimeout(
@@ -1012,7 +1098,7 @@ function scanNext() {
 
 
 /* =====================================================
-   START WHEN PAGE LOADS
+   PAGE LOAD
    ===================================================== */
 
 window.addEventListener(
