@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
   <meta charset="UTF-8">
 
   <meta name="viewport"
-        content="width=device-width, initial-scale=1">
+        content="width=device-width, initial-scale=1.0">
 
   <title>Stay Active QR Login</title>
 
@@ -19,6 +20,7 @@
 
     body {
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
@@ -33,7 +35,8 @@
     }
 
     h1 {
-      margin-bottom: 5px;
+      margin: 5px 0;
+      font-size: 30px;
     }
 
     .subtitle {
@@ -41,11 +44,16 @@
       margin-bottom: 20px;
     }
 
+    h2 {
+      margin: 10px 0 20px;
+    }
+
     #reader {
       width: 100%;
       background: #000;
       border-radius: 15px;
       overflow: hidden;
+      min-height: 100px;
     }
 
     button {
@@ -56,6 +64,7 @@
       border-radius: 10px;
       font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     #startButton {
@@ -78,6 +87,10 @@
 
     .error {
       background: #8b1111;
+    }
+
+    .success {
+      background: #075c31;
     }
 
     .member {
@@ -108,7 +121,7 @@
     }
 
     .info-row {
-      padding: 12px 5px;
+      padding: 13px 5px;
       border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
@@ -117,21 +130,30 @@
     }
 
     .info-label {
-      font-size: 13px;
+      font-size: 12px;
       color: #ccc;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .info-value {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: bold;
-      margin-top: 4px;
-      word-break: break-word;
+      margin-top: 5px;
+    }
+
+    .credit-value {
+      font-size: 24px;
+    }
+
+    .login-time {
+      font-size: 16px;
     }
 
   </style>
 
 </head>
+
 
 <body>
 
@@ -145,37 +167,90 @@
 
   <h2>MEMBER LOGIN</h2>
 
+
+  <!-- QR SCANNER -->
+
   <div id="reader"></div>
 
-  <button id="startButton"
-          onclick="startScanner()">
+
+  <!-- START CAMERA -->
+
+  <button
+    id="startButton"
+    onclick="startScanner()">
 
     📷 START SCANNER
 
   </button>
 
-  <div id="status"
-       class="status">
+
+  <!-- STATUS -->
+
+  <div
+    id="status"
+    class="status">
 
     Press START SCANNER
 
   </div>
 
 
-  <div id="member"
-       class="member">
+  <!-- =========================================
+       MEMBER INFORMATION
+  ========================================== -->
+
+  <div
+    id="member"
+    class="member">
 
     <h2>✅ LOGIN SUCCESSFUL</h2>
 
-    <div class="member-name"
-         id="memberName">
+
+    <!-- NAME -->
+
+    <div
+      class="member-name"
+      id="memberName">
+
+      -
+
     </div>
 
-    <div class="member-id"
-         id="memberId">
+
+    <!-- MEMBER ID -->
+
+    <div
+      class="member-id"
+      id="memberId">
+
+      -
+
     </div>
+
 
     <div class="info-box">
+
+
+      <!-- CONTACT NUMBER -->
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Contact Number
+        </div>
+
+        <div
+          class="info-value"
+          id="contact">
+
+          -
+
+        </div>
+
+      </div>
+
+
+      <!-- ANNUAL MEMBERSHIP CREDIT -->
 
       <div class="info-row">
 
@@ -183,41 +258,37 @@
           Annual Membership Credit
         </div>
 
-        <div class="info-value"
-             id="annualCredit">
-          N/A
+        <div
+          class="info-value credit-value"
+          id="annualCredit">
+
+          -
+
         </div>
 
       </div>
 
+
+      <!-- GYM WORKOUT PLAN CREDIT -->
 
       <div class="info-row">
 
         <div class="info-label">
-          Workout Plan
+          Gym Workout Plan Credit
         </div>
 
-        <div class="info-value"
-             id="workoutPlan">
-          N/A
-        </div>
+        <div
+          class="info-value credit-value"
+          id="workoutCredit">
 
-      </div>
+          -
 
-
-      <div class="info-row">
-
-        <div class="info-label">
-          Workout Plan Credit
-        </div>
-
-        <div class="info-value"
-             id="workoutCredit">
-          N/A
         </div>
 
       </div>
 
+
+      <!-- LOCKER RENTAL CREDIT -->
 
       <div class="info-row">
 
@@ -225,13 +296,18 @@
           Locker Rental Credit
         </div>
 
-        <div class="info-value"
-             id="lockerCredit">
-          N/A
+        <div
+          class="info-value credit-value"
+          id="lockerCredit">
+
+          -
+
         </div>
 
       </div>
 
+
+      <!-- LOGIN TIMESTAMP -->
 
       <div class="info-row">
 
@@ -239,22 +315,29 @@
           Login Time
         </div>
 
-        <div class="info-value"
-             id="loginTime">
+        <div
+          class="info-value login-time"
+          id="loginTime">
+
           -
+
         </div>
 
       </div>
+
 
     </div>
 
   </div>
 
 
-  <button id="scanAgain"
-          onclick="resetScanner()">
+  <!-- SCAN NEXT MEMBER -->
 
-    SCAN NEXT MEMBER
+  <button
+    id="scanAgain"
+    onclick="resetScanner()">
+
+    🔄 SCAN NEXT MEMBER
 
   </button>
 
@@ -263,17 +346,25 @@
 
 <script>
 
+
 /*
 =================================================
-APPS SCRIPT URL
+GOOGLE APPS SCRIPT
 =================================================
 */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbzc9l70JiwHwPSWLM2jI-N1kkY6Eonj6SpEEJLpv__3chsqwNe2dcoTpuPqC-yjFkGx/exec";
+"https://script.google.com/macros/s/AKfycbxCAtD7sB_qdgt6gLdp44cc2tR-TlW3ca0aYbqxg3lRGWuAoU_OQYrOgXojZTAe0AqU/exec";
 
+
+/*
+=================================================
+VARIABLES
+=================================================
+*/
 
 let scanner = null;
+
 let processing = false;
 
 
@@ -289,24 +380,32 @@ function startScanner() {
     return;
   }
 
+  processing = false;
+
+
   document.getElementById(
     "startButton"
   ).style.display = "none";
+
 
   document.getElementById(
     "scanAgain"
   ).style.display = "none";
 
+
   document.getElementById(
     "member"
   ).style.display = "none";
+
 
   showStatus(
     "Requesting camera..."
   );
 
+
   scanner =
     new Html5Qrcode("reader");
+
 
   scanner.start(
 
@@ -333,7 +432,7 @@ function startScanner() {
   .then(function() {
 
     showStatus(
-      "📷 Scan Member QR Code"
+      "📷 Point the camera at the member QR Code"
     );
 
   })
@@ -343,6 +442,7 @@ function startScanner() {
     showError(
       "CAMERA ERROR: " + error
     );
+
 
     document.getElementById(
       "startButton"
@@ -355,7 +455,7 @@ function startScanner() {
 
 /*
 =================================================
-QR SCANNED
+QR CODE SCANNED
 =================================================
 */
 
@@ -367,57 +467,77 @@ function onScanSuccess(decodedText) {
 
   processing = true;
 
+
   const memberId =
     decodedText.trim();
+
 
   showStatus(
     "Checking Member ID..."
   );
 
-  scanner.stop()
 
-    .then(function() {
+  if (scanner) {
 
-      loginMember(memberId);
+    scanner.stop()
 
-    })
+      .then(function() {
 
-    .catch(function() {
+        loginMember(memberId);
 
-      loginMember(memberId);
+      })
 
-    });
+      .catch(function() {
+
+        loginMember(memberId);
+
+      });
+
+  }
+
+  else {
+
+    loginMember(memberId);
+
+  }
 
 }
 
 
 /*
 =================================================
-LOGIN
+LOGIN MEMBER
 =================================================
 */
 
 function loginMember(memberId) {
 
+
   const callbackName =
-    "loginCallback_" + Date.now();
+    "loginCallback_" +
+    Date.now();
+
+
+  /*
+  ===============================================
+  JSONP CALLBACK
+  ===============================================
+  */
 
   window[callbackName] =
     function(result) {
 
-      console.log(
-        "GOOGLE APPS SCRIPT RESULT:",
-        result
-      );
-
       handleLogin(result);
 
+
       delete window[callbackName];
+
 
       const script =
         document.getElementById(
           callbackName
         );
+
 
       if (script) {
         script.remove();
@@ -425,6 +545,12 @@ function loginMember(memberId) {
 
     };
 
+
+  /*
+  ===============================================
+  CREATE SCRIPT REQUEST
+  ===============================================
+  */
 
   const script =
     document.createElement("script");
@@ -443,18 +569,28 @@ function loginMember(memberId) {
     callbackName;
 
 
+  /*
+  ===============================================
+  ERROR
+  ===============================================
+  */
+
   script.onerror =
     function() {
 
       showError(
-        "Unable to connect to Google Apps Script."
+        "Unable to connect to the server."
       );
+
 
       delete window[callbackName];
 
+
       script.remove();
 
+
       processing = false;
+
 
       document.getElementById(
         "scanAgain"
@@ -471,40 +607,67 @@ function loginMember(memberId) {
 
 /*
 =================================================
-DISPLAY RESULT
+HANDLE LOGIN RESULT
 =================================================
 */
 
 function handleLogin(result) {
 
+  console.log(
+    "LOGIN RESULT:",
+    result
+  );
+
+
+  /*
+  ===============================================
+  LOGIN FAILED
+  ===============================================
+  */
+
   if (
     !result ||
-    result.success !== true
+    !result.success
   ) {
 
     showError(
-      result &&
-      result.message
+      result && result.message
         ? result.message
         : "Login failed."
     );
 
+
     processing = false;
+
 
     document.getElementById(
       "scanAgain"
     ).style.display =
       "block";
 
+
     return;
+
   }
 
+
+  /*
+  ===============================================
+  HIDE STATUS
+  ===============================================
+  */
 
   document.getElementById(
     "status"
   ).style.display =
     "none";
 
+
+  /*
+  ===============================================
+  SHOW MEMBER CARD
+  ===============================================
+  */
 
   document.getElementById(
     "member"
@@ -513,89 +676,108 @@ function handleLogin(result) {
 
 
   /*
-   NAME
+  ===============================================
+  NAME
+  ===============================================
   */
 
   document.getElementById(
     "memberName"
   ).innerText =
-    result.name || "N/A";
+    displayValue(
+      result.name
+    );
 
 
   /*
-   MEMBER ID
+  ===============================================
+  MEMBER ID
+  ===============================================
   */
 
   document.getElementById(
     "memberId"
   ).innerText =
-    result.memberId ||
-    result.memberID ||
-    "N/A";
+    displayValue(
+      result.memberId
+    );
 
 
   /*
-   CURRENT APPS SCRIPT ONLY RETURNS:
-   name
-   memberId
-   contact
-   timestamp
+  ===============================================
+  CONTACT
+  ===============================================
+  */
 
-   Therefore these will currently show N/A.
+  document.getElementById(
+    "contact"
+  ).innerText =
+    displayValue(
+      result.contact
+    );
+
+
+  /*
+  ===============================================
+  ANNUAL MEMBERSHIP CREDIT
+  ===============================================
   */
 
   document.getElementById(
     "annualCredit"
   ).innerText =
-    result.annualCredit !== undefined
-      ? result.annualCredit + " Days"
-      : "N/A";
+    displayCredit(
+      result.annualCredit
+    );
 
 
-  document.getElementById(
-    "workoutPlan"
-  ).innerText =
-    result.workoutPlan || "N/A";
-
+  /*
+  ===============================================
+  GYM WORKOUT PLAN CREDIT
+  ===============================================
+  */
 
   document.getElementById(
     "workoutCredit"
   ).innerText =
-    result.workoutCredit !== undefined
-      ? result.workoutCredit + " Days"
-      : "N/A";
-
-
-  if (
-    result.lockerCredit === "No Locker"
-  ) {
-
-    document.getElementById(
-      "lockerCredit"
-    ).innerText =
-      "No Locker";
-
-  } else {
-
-    document.getElementById(
-      "lockerCredit"
-    ).innerText =
-      result.lockerCredit !== undefined
-        ? result.lockerCredit + " Days"
-        : "N/A";
-
-  }
+    displayCredit(
+      result.workoutCredit
+    );
 
 
   /*
-   LOGIN TIME
+  ===============================================
+  LOCKER RENTAL CREDIT
+  ===============================================
+  */
+
+  document.getElementById(
+    "lockerCredit"
+  ).innerText =
+    displayCredit(
+      result.lockerCredit
+    );
+
+
+  /*
+  ===============================================
+  LOGIN TIMESTAMP
+  ===============================================
   */
 
   document.getElementById(
     "loginTime"
   ).innerText =
-    result.timestamp || "-";
+    displayValue(
+      result.timestamp
+    );
 
+
+  /*
+  ===============================================
+  SHOW SCAN AGAIN
+  ===============================================
+  */
 
   document.getElementById(
     "scanAgain"
@@ -607,7 +789,62 @@ function handleLogin(result) {
 
 /*
 =================================================
-RESET
+DISPLAY NORMAL VALUE
+=================================================
+*/
+
+function displayValue(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "N/A";
+
+  }
+
+  return String(value);
+
+}
+
+
+/*
+=================================================
+DISPLAY CREDIT
+=================================================
+*/
+
+function displayCredit(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "N/A";
+
+  }
+
+
+  /*
+  No calculation.
+
+  This simply displays
+  whatever Apps Script
+  returned from DATA.
+  */
+
+  return String(value);
+
+}
+
+
+/*
+=================================================
+RESET SCANNER
 =================================================
 */
 
@@ -615,20 +852,30 @@ function resetScanner() {
 
   processing = false;
 
+
   document.getElementById(
     "member"
   ).style.display =
     "none";
+
 
   document.getElementById(
     "scanAgain"
   ).style.display =
     "none";
 
+
   document.getElementById(
     "startButton"
   ).style.display =
     "block";
+
+
+  document.getElementById(
+    "reader"
+  ).innerHTML =
+    "";
+
 
   showStatus(
     "Press START SCANNER"
@@ -650,11 +897,14 @@ function showStatus(message) {
       "status"
     );
 
+
   status.className =
     "status";
 
+
   status.innerText =
     message;
+
 
   status.style.display =
     "block";
@@ -675,11 +925,14 @@ function showError(message) {
       "status"
     );
 
+
   status.className =
     "status error";
 
+
   status.innerText =
     message;
+
 
   status.style.display =
     "block";
@@ -689,17 +942,21 @@ function showError(message) {
 
 /*
 =================================================
-NORMAL QR ERRORS
+NORMAL SCANNER ERRORS
 =================================================
 */
 
 function onScanError(errorMessage) {
 
-  // Ignore normal QR scanning errors.
+  /*
+  Normal QR scanning errors
+  are ignored.
+  */
 
 }
 
 </script>
 
 </body>
+
 </html>
