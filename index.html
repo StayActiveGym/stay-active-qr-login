@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
   <meta charset="UTF-8">
@@ -26,6 +27,7 @@
     }
 
     .container {
+      width: 100%;
       max-width: 480px;
       margin: auto;
       padding: 20px;
@@ -96,6 +98,35 @@
     .member-id {
       font-size: 20px;
       font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .info-box {
+      background: rgba(0,0,0,0.25);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: left;
+    }
+
+    .info-row {
+      padding: 12px 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 13px;
+      color: #ccc;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      font-size: 19px;
+      font-weight: bold;
+      margin-top: 4px;
     }
 
   </style>
@@ -135,6 +166,10 @@
   </div>
 
 
+  <!-- =====================================
+       MEMBER INFORMATION
+  ====================================== -->
+
   <div id="member"
        class="member">
 
@@ -148,7 +183,81 @@
          id="memberId">
     </div>
 
-    <p id="loginTime"></p>
+
+    <div class="info-box">
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Annual Membership Credit
+        </div>
+
+        <div class="info-value"
+             id="annualCredit">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Workout Plan
+        </div>
+
+        <div class="info-value"
+             id="workoutPlan">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Workout Plan Credit
+        </div>
+
+        <div class="info-value"
+             id="workoutCredit">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Locker Rental Credit
+        </div>
+
+        <div class="info-value"
+             id="lockerCredit">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Login Time
+        </div>
+
+        <div class="info-value"
+             id="loginTime">
+          -
+        </div>
+
+      </div>
+
+
+    </div>
 
   </div>
 
@@ -164,6 +273,7 @@
 
 
 <script>
+
 
 /*
 =================================================
@@ -278,6 +388,7 @@ function onScanSuccess(decodedText) {
 
   processing = true;
 
+
   const memberId =
     decodedText.trim();
 
@@ -306,7 +417,7 @@ function onScanSuccess(decodedText) {
 
 /*
 =================================================
-SEND MEMBER ID TO APPS SCRIPT
+SEND TO GOOGLE APPS SCRIPT
 =================================================
 */
 
@@ -368,7 +479,8 @@ function loginMember(memberId) {
 
       document.getElementById(
         "scanAgain"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
     };
 
@@ -380,11 +492,17 @@ function loginMember(memberId) {
 
 /*
 =================================================
-LOGIN RESULT
+DISPLAY LOGIN INFORMATION
 =================================================
 */
 
 function handleLogin(result) {
+
+  console.log(
+    "LOGIN RESULT:",
+    result
+  );
+
 
   if (!result.success) {
 
@@ -396,40 +514,179 @@ function handleLogin(result) {
 
     document.getElementById(
       "scanAgain"
-    ).style.display = "block";
+    ).style.display =
+      "block";
 
     return;
 
   }
 
 
+  /*
+   Hide scanner status
+  */
+
   document.getElementById(
     "status"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
+
+  /*
+   Show member information
+  */
 
   document.getElementById(
     "member"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 
+
+  /*
+   BASIC INFORMATION
+  */
 
   document.getElementById(
     "memberName"
   ).innerText =
-    result.name;
+    result.name || "-";
 
 
   document.getElementById(
     "memberId"
   ).innerText =
-    result.memberId;
+    result.memberId || "-";
 
+
+  /*
+   ANNUAL MEMBERSHIP CREDIT
+  */
+
+  if (
+    result.annualCredit === "" ||
+    result.annualCredit === null ||
+    result.annualCredit === undefined
+  ) {
+
+    document.getElementById(
+      "annualCredit"
+    ).innerText =
+      "N/A";
+
+  } else {
+
+    document.getElementById(
+      "annualCredit"
+    ).innerText =
+      result.annualCredit +
+      " Days";
+
+  }
+
+
+  /*
+   WORKOUT PLAN
+  */
+
+  document.getElementById(
+    "workoutPlan"
+  ).innerText =
+    result.workoutPlan || "N/A";
+
+
+  /*
+   WORKOUT PLAN CREDIT
+  */
+
+  if (
+    result.workoutCredit === "" ||
+    result.workoutCredit === null ||
+    result.workoutCredit === undefined
+  ) {
+
+    document.getElementById(
+      "workoutCredit"
+    ).innerText =
+      "N/A";
+
+  }
+
+  else if (
+    result.workoutPlan ===
+    "Per Session"
+  ) {
+
+    document.getElementById(
+      "workoutCredit"
+    ).innerText =
+      "1 Credit";
+
+  }
+
+  else {
+
+    document.getElementById(
+      "workoutCredit"
+    ).innerText =
+      result.workoutCredit +
+      " Days";
+
+  }
+
+
+  /*
+   LOCKER RENTAL CREDIT
+  */
+
+  if (
+    result.lockerCredit === "" ||
+    result.lockerCredit === null ||
+    result.lockerCredit === undefined
+  ) {
+
+    document.getElementById(
+      "lockerCredit"
+    ).innerText =
+      "N/A";
+
+  }
+
+  else if (
+    result.lockerCredit ===
+    "No Locker"
+  ) {
+
+    document.getElementById(
+      "lockerCredit"
+    ).innerText =
+      "No Locker";
+
+  }
+
+  else {
+
+    document.getElementById(
+      "lockerCredit"
+    ).innerText =
+      result.lockerCredit +
+      " Days";
+
+  }
+
+
+  /*
+   LOGIN TIME
+  */
 
   document.getElementById(
     "loginTime"
   ).innerText =
-    result.timestamp;
+    result.timestamp || "-";
 
+
+  /*
+   SHOW SCAN AGAIN
+  */
 
   document.getElementById(
     "scanAgain"
@@ -449,17 +706,24 @@ function resetScanner() {
 
   processing = false;
 
+
   document.getElementById(
     "member"
-  ).style.display = "none";
+  ).style.display =
+    "none";
+
 
   document.getElementById(
     "scanAgain"
-  ).style.display = "none";
+  ).style.display =
+    "none";
+
 
   document.getElementById(
     "startButton"
-  ).style.display = "block";
+  ).style.display =
+    "block";
+
 
   showStatus(
     "Press START SCANNER"
@@ -477,7 +741,9 @@ STATUS
 function showStatus(message) {
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
 
   status.className =
     "status";
@@ -500,7 +766,9 @@ ERROR
 function showError(message) {
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
 
   status.className =
     "status error";
@@ -522,11 +790,12 @@ IGNORE NORMAL QR ERRORS
 
 function onScanError(errorMessage) {
 
-  // Normal scanning errors are ignored.
+  // Normal QR scanning errors are ignored.
 
 }
 
 </script>
 
 </body>
+
 </html>
