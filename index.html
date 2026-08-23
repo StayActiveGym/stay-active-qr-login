@@ -12,7 +12,11 @@
 
   <title>Stay Active | Login</title>
 
-  <!-- QR SCANNER LIBRARY -->
+
+  <!-- ==========================================
+       QR SCANNER LIBRARY
+       ========================================== -->
+
   <script
     src="https://unpkg.com/html5-qrcode"
     type="text/javascript">
@@ -27,7 +31,9 @@
 
 
     body {
+
       margin: 0;
+
       min-height: 100vh;
 
       font-family:
@@ -36,17 +42,22 @@
         sans-serif;
 
       background: #f3f3f3;
+
       color: #222;
+
     }
 
 
     .container {
+
       width: 100%;
+
       max-width: 600px;
 
       margin: 0 auto;
 
       padding: 20px;
+
     }
 
 
@@ -55,20 +66,27 @@
        ========================================== */
 
     .header {
+
       text-align: center;
+
       margin-bottom: 20px;
+
     }
 
 
     .header h1 {
+
       margin: 0;
 
       font-size: 28px;
+
       font-weight: 800;
+
     }
 
 
     .header p {
+
       margin: 5px 0 0;
 
       color: #777;
@@ -76,6 +94,7 @@
       font-size: 14px;
 
       letter-spacing: 1px;
+
     }
 
 
@@ -84,6 +103,7 @@
        ========================================== */
 
     .scanner-title {
+
       text-align: center;
 
       font-size: 18px;
@@ -91,10 +111,12 @@
       font-weight: bold;
 
       margin-bottom: 12px;
+
     }
 
 
     #reader {
+
       width: 100%;
 
       background: #000;
@@ -102,10 +124,12 @@
       border-radius: 16px;
 
       overflow: hidden;
+
     }
 
 
     #status {
+
       text-align: center;
 
       margin-top: 12px;
@@ -113,6 +137,7 @@
       font-size: 14px;
 
       color: #666;
+
     }
 
 
@@ -121,6 +146,7 @@
        ========================================== */
 
     #memberCard {
+
       display: none;
 
       margin-top: 20px;
@@ -133,21 +159,25 @@
 
       box-shadow:
         0 5px 20px rgba(0,0,0,0.10);
+
     }
 
 
     .success {
+
       text-align: center;
 
-      font-size: 23px;
+      font-size: 25px;
 
-      font-weight: bold;
+      font-weight: 800;
 
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+
     }
 
 
     .timestamp {
+
       text-align: center;
 
       color: #777;
@@ -155,10 +185,16 @@
       font-size: 13px;
 
       margin-bottom: 20px;
+
     }
 
 
+    /* ==========================================
+       NORMAL INFORMATION ROW
+       ========================================== */
+
     .row {
+
       display: flex;
 
       justify-content: space-between;
@@ -171,10 +207,12 @@
 
       border-bottom:
         1px solid #eee;
+
     }
 
 
     .label {
+
       color: #777;
 
       font-size: 13px;
@@ -182,10 +220,12 @@
       font-weight: bold;
 
       flex: 1;
+
     }
 
 
     .value {
+
       text-align: right;
 
       font-size: 15px;
@@ -195,6 +235,117 @@
       flex: 1.5;
 
       word-break: break-word;
+
+    }
+
+
+    /* ==========================================
+       ANNUAL MEMBERSHIP
+       ========================================== */
+
+    .annual-box {
+
+      margin: 10px 0 15px 0;
+
+      padding: 18px;
+
+      border-radius: 14px;
+
+      background: #f7f7f7;
+
+      border: 2px solid #222;
+
+      text-align: center;
+
+    }
+
+
+    .annual-title {
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+      letter-spacing: 0.5px;
+
+      margin-bottom: 10px;
+
+      color: #555;
+
+    }
+
+
+    .annual-value {
+
+      font-size: 21px;
+
+      line-height: 1.4;
+
+      font-weight: 800;
+
+      color: #111;
+
+      word-break: break-word;
+
+    }
+
+
+    .annual-placeholder {
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+      color: #777;
+
+    }
+
+
+    /* ==========================================
+       CREDIT BOXES
+       ========================================== */
+
+    .credit-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 15px;
+
+      padding: 14px 0;
+
+      border-bottom:
+        1px solid #eee;
+
+    }
+
+
+    .credit-label {
+
+      color: #777;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      flex: 1.5;
+
+    }
+
+
+    .credit-value {
+
+      text-align: right;
+
+      font-size: 22px;
+
+      font-weight: 800;
+
+      flex: 1;
+
     }
 
 
@@ -203,6 +354,7 @@
        ========================================== */
 
     #errorCard {
+
       display: none;
 
       margin-top: 20px;
@@ -217,22 +369,27 @@
 
       box-shadow:
         0 5px 20px rgba(0,0,0,0.10);
+
     }
 
 
     .errorTitle {
+
       font-size: 22px;
 
       font-weight: bold;
 
       margin-bottom: 8px;
+
     }
 
 
     .errorMessage {
+
       color: #777;
 
       margin-bottom: 20px;
+
     }
 
 
@@ -241,6 +398,7 @@
        ========================================== */
 
     button {
+
       width: 100%;
 
       border: none;
@@ -258,11 +416,14 @@
       color: white;
 
       cursor: pointer;
+
     }
 
 
     button:active {
+
       transform: scale(0.98);
+
     }
 
 
@@ -273,24 +434,53 @@
     @media (max-width: 480px) {
 
       .container {
+
         padding: 12px;
+
       }
 
 
       .header h1 {
+
         font-size: 24px;
+
+      }
+
+
+      .annual-value {
+
+        font-size: 18px;
+
       }
 
 
       .row {
+
         display: block;
+
       }
 
 
       .value {
+
         text-align: left;
 
         margin-top: 4px;
+
+      }
+
+
+      .credit-row {
+
+        display: flex;
+
+      }
+
+
+      .credit-value {
+
+        font-size: 21px;
+
       }
 
     }
@@ -323,14 +513,17 @@
   </div>
 
 
+
   <!-- ==========================================
-       QR SCANNER
+       SCANNER
        ========================================== -->
 
   <div id="scannerSection">
 
     <div class="scanner-title">
+
       SCAN MEMBER QR CODE
+
     </div>
 
 
@@ -338,10 +531,13 @@
 
 
     <div id="status">
+
       Starting camera...
+
     </div>
 
   </div>
+
 
 
   <!-- ==========================================
@@ -352,7 +548,9 @@
 
 
     <div class="success">
+
       LOGIN SUCCESSFUL
+
     </div>
 
 
@@ -362,12 +560,17 @@
     </div>
 
 
-    <!-- MEMBER ID -->
+
+    <!-- ========================================
+         MEMBER ID
+         ======================================== -->
 
     <div class="row">
 
       <div class="label">
+
         MEMBER ID
+
       </div>
 
       <div
@@ -378,12 +581,17 @@
     </div>
 
 
-    <!-- MEMBER NAME -->
+
+    <!-- ========================================
+         MEMBER NAME
+         ======================================== -->
 
     <div class="row">
 
       <div class="label">
+
         MEMBER NAME
+
       </div>
 
       <div
@@ -394,12 +602,17 @@
     </div>
 
 
-    <!-- CONTACT -->
+
+    <!-- ========================================
+         CONTACT
+         ======================================== -->
 
     <div class="row">
 
       <div class="label">
+
         CONTACT
+
       </div>
 
       <div
@@ -410,28 +623,43 @@
     </div>
 
 
-    <!-- ANNUAL MEMBERSHIP -->
 
-    <div class="row">
+    <!-- ========================================
+         ANNUAL MEMBERSHIP
+         LARGE DISPLAY
+         ======================================== -->
 
-      <div class="label">
+    <div class="annual-box">
+
+      <div class="annual-title">
+
         ANNUAL MEMBERSHIP
+
       </div>
+
 
       <div
         id="annualMembership"
-        class="value">
+        class="annual-value">
+
+        0
+
       </div>
 
     </div>
 
 
-    <!-- GYM WORKOUT PLAN -->
+
+    <!-- ========================================
+         GYM WORKOUT PLAN
+         ======================================== -->
 
     <div class="row">
 
       <div class="label">
+
         GYM WORKOUT PLAN
+
       </div>
 
       <div
@@ -442,36 +670,53 @@
     </div>
 
 
-    <!-- GYM WORKOUT PLAN CREDIT -->
 
-    <div class="row">
+    <!-- ========================================
+         GYM WORKOUT PLAN CREDIT
+         ======================================== -->
 
-      <div class="label">
+    <div class="credit-row">
+
+      <div class="credit-label">
+
         GYM WORKOUT PLAN CREDIT
+
       </div>
 
       <div
         id="workoutCredit"
-        class="value">
+        class="credit-value">
+
+        0
+
       </div>
 
     </div>
 
 
-    <!-- LOCKER RENTAL CREDIT -->
 
-    <div class="row">
+    <!-- ========================================
+         LOCKER RENTAL CREDIT
+         ======================================== -->
 
-      <div class="label">
+    <div class="credit-row">
+
+      <div class="credit-label">
+
         LOCKER RENTAL CREDIT
+
       </div>
 
       <div
         id="lockerCredit"
-        class="value">
+        class="credit-value">
+
+        0
+
       </div>
 
     </div>
+
 
 
     <br>
@@ -488,6 +733,7 @@
   </div>
 
 
+
   <!-- ==========================================
        ERROR CARD
        ========================================== -->
@@ -496,7 +742,9 @@
 
 
     <div class="errorTitle">
+
       LOGIN FAILED
+
     </div>
 
 
@@ -566,10 +814,6 @@ function startScanner() {
     );
 
 
-  /*
-   * GET AVAILABLE CAMERAS
-   */
-
   Html5Qrcode
     .getCameras()
 
@@ -597,7 +841,7 @@ function startScanner() {
 
 
       /*
-       * FIND REAR CAMERA
+       * PREFER REAR CAMERA
        */
 
       for (
@@ -628,10 +872,6 @@ function startScanner() {
 
       }
 
-
-      /*
-       * SCANNER CONFIG
-       */
 
       const config = {
 
@@ -671,10 +911,6 @@ function startScanner() {
         .textContent =
           "Opening camera...";
 
-
-      /*
-       * START CAMERA
-       */
 
       return scanner.start(
 
@@ -737,7 +973,6 @@ function onScanSuccess(
   decodedResult
 ) {
 
-
   if (processing) {
 
     return;
@@ -763,10 +998,6 @@ function onScanSuccess(
   }
 
 
-  /*
-   * STOP CAMERA
-   */
-
   stopScanner();
 
 
@@ -776,10 +1007,6 @@ function onScanSuccess(
       "Processing login...";
 
 
-  /*
-   * BUILD API URL
-   */
-
   const url =
     API_URL +
     "?memberId=" +
@@ -787,10 +1014,6 @@ function onScanSuccess(
       memberId
     );
 
-
-  /*
-   * CALL APPS SCRIPT
-   */
 
   fetch(url)
 
@@ -852,7 +1075,7 @@ function onScanFailure(error) {
 
 
 /* =====================================================
-   HANDLE API RESULT
+   HANDLE RESULT
    ===================================================== */
 
 function handleResult(
@@ -883,9 +1106,9 @@ function handleResult(
   }
 
 
-  /*
-   * MEMBER ID
-   */
+  /* ================================================
+     MEMBER ID
+     ================================================ */
 
   document
     .getElementById("memberId")
@@ -893,9 +1116,10 @@ function handleResult(
       data.memberId || "";
 
 
-  /*
-   * NAME
-   */
+
+  /* ================================================
+     MEMBER NAME
+     ================================================ */
 
   document
     .getElementById("name")
@@ -903,9 +1127,10 @@ function handleResult(
       data.name || "";
 
 
-  /*
-   * CONTACT
-   */
+
+  /* ================================================
+     CONTACT
+     ================================================ */
 
   document
     .getElementById("contact")
@@ -913,19 +1138,46 @@ function handleResult(
       data.contact || "";
 
 
-  /*
-   * ANNUAL MEMBERSHIP
-   */
 
-  document
-    .getElementById("annualMembership")
-    .textContent =
-      data.annualMembership || "0";
+  /* ================================================
+     ANNUAL MEMBERSHIP
+     ================================================ */
+
+  const annualMembership =
+    data.annualMembership;
 
 
-  /*
-   * GYM WORKOUT PLAN
-   */
+  const annualElement =
+    document.getElementById(
+      "annualMembership"
+    );
+
+
+  if (
+    annualMembership !== undefined &&
+    annualMembership !== null &&
+    String(
+      annualMembership
+    ).trim() !== ""
+  ) {
+
+    annualElement.textContent =
+      String(
+        annualMembership
+      );
+
+  } else {
+
+    annualElement.textContent =
+      "0";
+
+  }
+
+
+
+  /* ================================================
+     GYM WORKOUT PLAN
+     ================================================ */
 
   document
     .getElementById("workoutPlan")
@@ -933,9 +1185,10 @@ function handleResult(
       data.workoutPlan || "";
 
 
-  /*
-   * GYM WORKOUT PLAN CREDIT
-   */
+
+  /* ================================================
+     GYM WORKOUT CREDIT
+     ================================================ */
 
   document
     .getElementById("workoutCredit")
@@ -943,9 +1196,10 @@ function handleResult(
       data.workoutCredit ?? 0;
 
 
-  /*
-   * LOCKER RENTAL CREDIT
-   */
+
+  /* ================================================
+     LOCKER CREDIT
+     ================================================ */
 
   document
     .getElementById("lockerCredit")
@@ -953,9 +1207,10 @@ function handleResult(
       data.lockerCredit ?? 0;
 
 
-  /*
-   * TIMESTAMP
-   */
+
+  /* ================================================
+     TIMESTAMP
+     ================================================ */
 
   document
     .getElementById("timestamp")
@@ -963,9 +1218,10 @@ function handleResult(
       data.timestamp || "";
 
 
-  /*
-   * HIDE SCANNER
-   */
+
+  /* ================================================
+     HIDE SCANNER
+     ================================================ */
 
   document
     .getElementById("scannerSection")
@@ -973,20 +1229,16 @@ function handleResult(
       "none";
 
 
-  /*
-   * SHOW MEMBER CARD
-   */
+
+  /* ================================================
+     SHOW MEMBER CARD
+     ================================================ */
 
   document
     .getElementById("memberCard")
     .style.display =
       "block";
 
-
-  document
-    .getElementById("status")
-    .textContent =
-      "";
 
 }
 
@@ -1070,19 +1322,11 @@ function scanNext() {
   processing = false;
 
 
-  /*
-   * HIDE MEMBER CARD
-   */
-
   document
     .getElementById("memberCard")
     .style.display =
       "none";
 
-
-  /*
-   * HIDE ERROR
-   */
 
   document
     .getElementById("errorCard")
@@ -1090,19 +1334,11 @@ function scanNext() {
       "none";
 
 
-  /*
-   * SHOW SCANNER
-   */
-
   document
     .getElementById("scannerSection")
     .style.display =
       "block";
 
-
-  /*
-   * CLEAR OLD SCANNER
-   */
 
   if (scanner) {
 
@@ -1118,10 +1354,6 @@ function scanNext() {
 
   }
 
-
-  /*
-   * START NEW SCAN
-   */
 
   setTimeout(
     function() {
