@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title>Stay Active QR Login</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    #reader {
+      width: 100%;
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    #startButton {
+      background: white;
+      color: black;
+    }
+
+    #scanAgain {
+      background: #333;
+      color: white;
+      display: none;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #222;
+    }
+
+    .error {
+      background: #8b1111;
+    }
+
+    .member {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 15px;
+      background: #075c31;
+    }
+
+    .member-name {
+      font-size: 25px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .member-id {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <h1>STAY ACTIVE</h1>
+
+  <div class="subtitle">
+    Lifestyle Fitness Gym
+  </div>
+
+  <h2>MEMBER LOGIN</h2>
+
+
+  <div id="reader"></div>
+
+
+  <button id="startButton"
+          onclick="startScanner()">
+
+    📷 START SCANNER
+
+  </button>
+
+
+  <div id="status"
+       class="status">
+
+    Press START SCANNER
+
+  </div>
+
+
+  <div id="member"
+       class="member">
+
+    <h2>✅ LOGIN SUCCESSFUL</h2>
+
+    <div class="member-name"
+         id="memberName">
+    </div>
+
+    <div class="member-id"
+         id="memberId">
+    </div>
+
+    <p id="loginTime"></p>
+
+  </div>
+
+
+  <button id="scanAgain"
+          onclick="resetScanner()">
+
+    SCAN NEXT MEMBER
+
+  </button>
+
+</div>
+
+
+<script>
+
+/*
+=================================================
+GOOGLE APPS SCRIPT BACKEND
+=================================================
+*/
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzc9l70JiwHwPSWLM2jI-N1kkY6Eonj6SpEEJLpv__3chsqwNe2dcoTpuPqC-yjFkGx/exec";
+
+
+let scanner = null;
+
+let processing = false;
+
+
+/*
+=================================================
+START CAMERA
+=================================================
+*/
+
+function startScanner() {
+
+  if (processing) {
+    return;
+  }
+
+  processing = false;
+
+
+  document.getElementById(
+    "startButton"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "member"
+  ).style.display = "none";
+
+
+  showStatus(
+    "Requesting camera..."
+  );
+
+
+  scanner =
+    new Html5Qrcode("reader");
+
+
+  scanner.start(
+
+    {
+      facingMode: "environment"
+    },
+
+    {
+      fps: 10,
+
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+
+    },
+
+    onScanSuccess,
+
+    onScanError
+
+  )
+
+  .then(function() {
+
+    showStatus(
+      "📷 Scan Member QR Code"
+    );
+
+  })
+
+  .catch(function(error) {
+
+    showError(
+      "CAMERA ERROR: " + error
+    );
+
+    document.getElementById(
+      "startButton"
+    ).style.display = "block";
+
+  });
+
+}
+
+
+/*
+=================================================
+QR CODE SCANNED
+=================================================
+*/
+
+function onScanSuccess(decodedText) {
+
+  if (processing) {
+    return;
+  }
+
+  processing = true;
+
+  const memberId =
+    decodedText.trim();
+
+
+  showStatus(
+    "Checking Member ID..."
+  );
+
+
+  scanner.stop()
+
+    .then(function() {
+
+      loginMember(memberId);
+
+    })
+
+    .catch(function() {
+
+      loginMember(memberId);
+
+    });
+
+}
+
+
+/*
+=================================================
+SEND MEMBER ID TO APPS SCRIPT
+=================================================
+*/
+
+function loginMember(memberId) {
+
+  const callbackName =
+    "loginCallback_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(result) {
+
+      handleLogin(result);
+
+      delete window[callbackName];
+
+      const script =
+        document.getElementById(
+          callbackName
+        );
+
+      if (script) {
+        script.remove();
+      }
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.id =
+    callbackName;
+
+
+  script.src =
+    API_URL +
+    "?action=login" +
+    "&memberId=" +
+    encodeURIComponent(memberId) +
+    "&callback=" +
+    callbackName;
+
+
+  script.onerror =
+    function() {
+
+      showError(
+        "Unable to connect to the server."
+      );
+
+      delete window[callbackName];
+
+      script.remove();
+
+      processing = false;
+
+      document.getElementById(
+        "scanAgain"
+      ).style.display = "block";
+
+    };
+
+
+  document.body.appendChild(script);
+
+}
+
+
+/*
+=================================================
+LOGIN RESULT
+=================================================
+*/
+
+function handleLogin(result) {
+
+  if (!result.success) {
+
+    showError(
+      result.message
+    );
+
+    processing = false;
+
+    document.getElementById(
+      "scanAgain"
+    ).style.display = "block";
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "status"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "member"
+  ).style.display = "block";
+
+
+  document.getElementById(
+    "memberName"
+  ).innerText =
+    result.name;
+
+
+  document.getElementById(
+    "memberId"
+  ).innerText =
+    result.memberId;
+
+
+  document.getElementById(
+    "loginTime"
+  ).innerText =
+    result.timestamp;
+
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display =
+    "block";
+
+}
+
+
+/*
+=================================================
+RESET
+=================================================
+*/
+
+function resetScanner() {
+
+  processing = false;
+
+  document.getElementById(
+    "member"
+  ).style.display = "none";
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display = "none";
+
+  document.getElementById(
+    "startButton"
+  ).style.display = "block";
+
+  showStatus(
+    "Press START SCANNER"
+  );
+
+}
+
+
+/*
+=================================================
+STATUS
+=================================================
+*/
+
+function showStatus(message) {
+
+  const status =
+    document.getElementById("status");
+
+  status.className =
+    "status";
+
+  status.innerText =
+    message;
+
+  status.style.display =
+    "block";
+
+}
+
+
+/*
+=================================================
+ERROR
+=================================================
+*/
+
+function showError(message) {
+
+  const status =
+    document.getElementById("status");
+
+  status.className =
+    "status error";
+
+  status.innerText =
+    message;
+
+  status.style.display =
+    "block";
+
+}
+
+
+/*
+=================================================
+IGNORE NORMAL QR ERRORS
+=================================================
+*/
+
+function onScanError(errorMessage) {
+
+  // Normal scanning errors are ignored.
+
+}
+
+</script>
+
+</body>
+</html>
