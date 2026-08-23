@@ -57,6 +57,7 @@
       border-radius: 10px;
       font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     #startButton {
@@ -147,6 +148,8 @@
   <h2>MEMBER LOGIN</h2>
 
 
+  <!-- CAMERA -->
+
   <div id="reader"></div>
 
 
@@ -157,6 +160,8 @@
 
   </button>
 
+
+  <!-- STATUS -->
 
   <div id="status"
        class="status">
@@ -175,9 +180,11 @@
 
     <h2>✅ LOGIN SUCCESSFUL</h2>
 
+
     <div class="member-name"
          id="memberName">
     </div>
+
 
     <div class="member-id"
          id="memberId">
@@ -186,6 +193,8 @@
 
     <div class="info-box">
 
+
+      <!-- ANNUAL MEMBERSHIP -->
 
       <div class="info-row">
 
@@ -201,6 +210,8 @@
       </div>
 
 
+      <!-- WORKOUT PLAN -->
+
       <div class="info-row">
 
         <div class="info-label">
@@ -214,6 +225,8 @@
 
       </div>
 
+
+      <!-- WORKOUT CREDIT -->
 
       <div class="info-row">
 
@@ -229,6 +242,8 @@
       </div>
 
 
+      <!-- LOCKER CREDIT -->
+
       <div class="info-row">
 
         <div class="info-label">
@@ -242,6 +257,8 @@
 
       </div>
 
+
+      <!-- LOGIN TIME -->
 
       <div class="info-row">
 
@@ -262,6 +279,8 @@
   </div>
 
 
+  <!-- SCAN NEXT -->
+
   <button id="scanAgain"
           onclick="resetScanner()">
 
@@ -277,7 +296,7 @@
 
 /*
 =================================================
-GOOGLE APPS SCRIPT BACKEND
+GOOGLE APPS SCRIPT
 =================================================
 */
 
@@ -292,7 +311,7 @@ let processing = false;
 
 /*
 =================================================
-START CAMERA
+START SCANNER
 =================================================
 */
 
@@ -301,8 +320,6 @@ function startScanner() {
   if (processing) {
     return;
   }
-
-  processing = false;
 
 
   document.getElementById(
@@ -365,6 +382,7 @@ function startScanner() {
       "CAMERA ERROR: " + error
     );
 
+
     document.getElementById(
       "startButton"
     ).style.display = "block";
@@ -376,7 +394,7 @@ function startScanner() {
 
 /*
 =================================================
-QR CODE SCANNED
+QR SCANNED
 =================================================
 */
 
@@ -385,6 +403,7 @@ function onScanSuccess(decodedText) {
   if (processing) {
     return;
   }
+
 
   processing = true;
 
@@ -417,7 +436,7 @@ function onScanSuccess(decodedText) {
 
 /*
 =================================================
-SEND TO GOOGLE APPS SCRIPT
+LOGIN MEMBER
 =================================================
 */
 
@@ -433,12 +452,15 @@ function loginMember(memberId) {
 
       handleLogin(result);
 
+
       delete window[callbackName];
+
 
       const script =
         document.getElementById(
           callbackName
         );
+
 
       if (script) {
         script.remove();
@@ -468,14 +490,18 @@ function loginMember(memberId) {
     function() {
 
       showError(
-        "Unable to connect to the server."
+        "Unable to connect to server."
       );
+
 
       delete window[callbackName];
 
+
       script.remove();
 
+
       processing = false;
+
 
       document.getElementById(
         "scanAgain"
@@ -492,7 +518,7 @@ function loginMember(memberId) {
 
 /*
 =================================================
-DISPLAY LOGIN INFORMATION
+DISPLAY MEMBER
 =================================================
 */
 
@@ -504,18 +530,30 @@ function handleLogin(result) {
   );
 
 
-  if (!result.success) {
+  /*
+   LOGIN FAILED
+  */
+
+  if (
+    !result ||
+    result.success !== true
+  ) {
 
     showError(
-      result.message
+      result && result.message
+        ? result.message
+        : "Login failed."
     );
 
+
     processing = false;
+
 
     document.getElementById(
       "scanAgain"
     ).style.display =
       "block";
+
 
     return;
 
@@ -523,7 +561,7 @@ function handleLogin(result) {
 
 
   /*
-   Hide scanner status
+   HIDE STATUS
   */
 
   document.getElementById(
@@ -533,7 +571,7 @@ function handleLogin(result) {
 
 
   /*
-   Show member information
+   SHOW MEMBER PANEL
   */
 
   document.getElementById(
@@ -543,7 +581,7 @@ function handleLogin(result) {
 
 
   /*
-   BASIC INFORMATION
+   MEMBER NAME
   */
 
   document.getElementById(
@@ -552,46 +590,44 @@ function handleLogin(result) {
     result.name || "-";
 
 
+  /*
+   MEMBER ID
+
+   Supports both:
+   memberId
+   memberID
+  */
+
   document.getElementById(
     "memberId"
   ).innerText =
-    result.memberId || "-";
+    result.memberId ||
+    result.memberID ||
+    "-";
 
 
   /*
    ANNUAL MEMBERSHIP CREDIT
   */
 
-  if (
-    result.annualCredit === "" ||
-    result.annualCredit === null ||
-    result.annualCredit === undefined
-  ) {
-
-    document.getElementById(
-      "annualCredit"
-    ).innerText =
-      "N/A";
-
-  } else {
-
-    document.getElementById(
-      "annualCredit"
-    ).innerText =
-      result.annualCredit +
-      " Days";
-
-  }
+  document.getElementById(
+    "annualCredit"
+  ).innerText =
+    formatCredit(
+      result.annualCredit,
+      "Days"
+    );
 
 
   /*
    WORKOUT PLAN
   */
 
- document.getElementById(
-  "workoutPlan"
-).innerText =
-  "RAW: " + JSON.stringify(result);
+  document.getElementById(
+    "workoutPlan"
+  ).innerText =
+    result.workoutPlan ||
+    "N/A";
 
 
   /*
@@ -599,19 +635,6 @@ function handleLogin(result) {
   */
 
   if (
-    result.workoutCredit === "" ||
-    result.workoutCredit === null ||
-    result.workoutCredit === undefined
-  ) {
-
-    document.getElementById(
-      "workoutCredit"
-    ).innerText =
-      "N/A";
-
-  }
-
-  else if (
     result.workoutPlan ===
     "Per Session"
   ) {
@@ -621,15 +644,15 @@ function handleLogin(result) {
     ).innerText =
       "1 Credit";
 
-  }
-
-  else {
+  } else {
 
     document.getElementById(
       "workoutCredit"
     ).innerText =
-      result.workoutCredit +
-      " Days";
+      formatCredit(
+        result.workoutCredit,
+        "Days"
+      );
 
   }
 
@@ -639,19 +662,6 @@ function handleLogin(result) {
   */
 
   if (
-    result.lockerCredit === "" ||
-    result.lockerCredit === null ||
-    result.lockerCredit === undefined
-  ) {
-
-    document.getElementById(
-      "lockerCredit"
-    ).innerText =
-      "N/A";
-
-  }
-
-  else if (
     result.lockerCredit ===
     "No Locker"
   ) {
@@ -661,15 +671,15 @@ function handleLogin(result) {
     ).innerText =
       "No Locker";
 
-  }
-
-  else {
+  } else {
 
     document.getElementById(
       "lockerCredit"
     ).innerText =
-      result.lockerCredit +
-      " Days";
+      formatCredit(
+        result.lockerCredit,
+        "Days"
+      );
 
   }
 
@@ -681,7 +691,8 @@ function handleLogin(result) {
   document.getElementById(
     "loginTime"
   ).innerText =
-    result.timestamp || "-";
+    result.timestamp ||
+    "-";
 
 
   /*
@@ -692,6 +703,33 @@ function handleLogin(result) {
     "scanAgain"
   ).style.display =
     "block";
+
+}
+
+
+/*
+=================================================
+FORMAT CREDIT
+=================================================
+*/
+
+function formatCredit(
+  value,
+  unit
+) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "N/A";
+
+  }
+
+
+  return value + " " + unit;
 
 }
 
@@ -745,11 +783,14 @@ function showStatus(message) {
       "status"
     );
 
+
   status.className =
     "status";
 
+
   status.innerText =
     message;
+
 
   status.style.display =
     "block";
@@ -770,11 +811,14 @@ function showError(message) {
       "status"
     );
 
+
   status.className =
     "status error";
 
+
   status.innerText =
     message;
+
 
   status.style.display =
     "block";
@@ -784,13 +828,13 @@ function showError(message) {
 
 /*
 =================================================
-IGNORE NORMAL QR ERRORS
+NORMAL QR SCANNING ERRORS
 =================================================
 */
 
 function onScanError(errorMessage) {
 
-  // Normal QR scanning errors are ignored.
+  // Ignore normal scanning errors.
 
 }
 
