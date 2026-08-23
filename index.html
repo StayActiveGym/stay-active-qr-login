@@ -25,7 +25,6 @@
       box-sizing: border-box;
     }
 
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -362,6 +361,8 @@
     </div>
 
 
+    <!-- MEMBER ID -->
+
     <div class="row">
 
       <div class="label">
@@ -375,6 +376,8 @@
 
     </div>
 
+
+    <!-- NAME -->
 
     <div class="row">
 
@@ -390,6 +393,8 @@
     </div>
 
 
+    <!-- CONTACT -->
+
     <div class="row">
 
       <div class="label">
@@ -403,6 +408,8 @@
 
     </div>
 
+
+    <!-- ANNUAL MEMBERSHIP -->
 
     <div class="row">
 
@@ -418,6 +425,8 @@
     </div>
 
 
+    <!-- GYM WORKOUT PLAN -->
+
     <div class="row">
 
       <div class="label">
@@ -432,6 +441,8 @@
     </div>
 
 
+    <!-- GYM WORKOUT PLAN CREDIT -->
+
     <div class="row">
 
       <div class="label">
@@ -445,6 +456,8 @@
 
     </div>
 
+
+    <!-- LOCKER RENTAL CREDIT -->
 
     <div class="row">
 
@@ -829,7 +842,7 @@ function onScanSuccess(
 function onScanFailure(error) {
 
   /*
-   * Normal scanning failures are ignored.
+   * Normal QR scanning failures are ignored.
    */
 
 }
@@ -905,11 +918,11 @@ function handleResult(
   document
     .getElementById("annualMembership")
     .textContent =
-      data.annualMembership || "";
+      data.annualMembership || "0";
 
 
   /*
-   * WORKOUT PLAN
+   * GYM WORKOUT PLAN
    */
 
   document
@@ -919,7 +932,7 @@ function handleResult(
 
 
   /*
-   * WORKOUT CREDIT
+   * GYM WORKOUT PLAN CREDIT
    */
 
   document
@@ -929,7 +942,7 @@ function handleResult(
 
 
   /*
-   * LOCKER CREDIT
+   * LOCKER RENTAL CREDIT
    */
 
   document
@@ -1046,7 +1059,7 @@ function scanNext() {
 
 
   /*
-   * HIDE RESULT
+   * HIDE MEMBER CARD
    */
 
   document
@@ -1054,6 +1067,10 @@ function scanNext() {
     .style.display =
       "none";
 
+
+  /*
+   * HIDE ERROR
+   */
 
   document
     .getElementById("errorCard")
@@ -1081,7 +1098,7 @@ function scanNext() {
 
 
   /*
-   * START AGAIN
+   * START NEW SCAN
    */
 
   setTimeout(
