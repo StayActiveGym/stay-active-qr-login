@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +21,7 @@
 
 body {
   margin: 0;
-  background: #111;
+  background: #000;
   color: white;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -33,9 +34,16 @@ body {
   padding: 20px;
 }
 
+/* ==========================================
+   HEADER
+========================================== */
+
 h1 {
   margin: 5px 0;
-  font-size: 30px;
+  font-size: 32px;
+  font-weight: 900;
+  color: #FFD400;
+  letter-spacing: 1px;
 }
 
 .subtitle {
@@ -43,12 +51,28 @@ h1 {
   margin-bottom: 20px;
 }
 
+h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   QR READER
+========================================== */
+
 #reader {
   width: 100%;
-  background: #000;
+  background: #111;
+  border: 2px solid #FFD400;
   border-radius: 15px;
   overflow: hidden;
 }
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
 
 button {
   width: 100%;
@@ -58,61 +82,94 @@ button {
   border-radius: 10px;
   font-size: 17px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #startButton {
-  background: white;
-  color: black;
+  background: #FFD400;
+  color: #000;
+}
+
+#startButton:hover {
+  background: #ffe44d;
 }
 
 #scanAgain {
   display: none;
-  background: #333;
-  color: white;
+  background: #FFD400;
+  color: #000;
 }
+
+#scanAgain:hover {
+  background: #ffe44d;
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
 
 #status {
   margin-top: 15px;
   padding: 15px;
   border-radius: 10px;
-  background: #222;
+  background: #151515;
+  border: 1px solid #333;
+  color: #FFD400;
 }
 
 .error {
   background: #8b1111 !important;
+  border-color: #ff3333 !important;
+  color: white !important;
 }
+
+
+/* ==========================================
+   MEMBER PANEL
+========================================== */
 
 #member {
   display: none;
   margin-top: 20px;
   padding: 20px;
   border-radius: 15px;
-  background: #075c31;
+  background: #111;
+  border: 2px solid #FFD400;
 }
 
 .success {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 15px;
+  color: #FFD400;
 }
 
 .member-name {
   font-size: 26px;
   font-weight: bold;
   margin: 10px 0;
+  color: white;
 }
 
 .member-id {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #FFD400;
 }
 
+
+/* ==========================================
+   INFORMATION BOX
+========================================== */
+
 .info-box {
-  background: rgba(0,0,0,0.25);
+  background: #000;
   border-radius: 12px;
   padding: 10px 15px;
   text-align: left;
+  border: 1px solid #333;
 }
 
 .info-row {
@@ -126,7 +183,7 @@ button {
 
 .label {
   font-size: 13px;
-  color: #ccc;
+  color: #aaa;
   text-transform: uppercase;
 }
 
@@ -134,6 +191,34 @@ button {
   font-size: 21px;
   font-weight: bold;
   margin-top: 5px;
+  color: #FFD400;
+}
+
+/* ZERO CREDIT */
+
+.value.zero {
+  color: #ff2b2b !important;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .member-name {
+    font-size: 24px;
+  }
+
 }
 
 </style>
@@ -446,18 +531,10 @@ GET DATA FROM APPS SCRIPT
 
 function getMemberData(memberId) {
 
-  /*
-  Create unique JSONP callback
-  */
-
   const callbackName =
     "stayActive_" +
     Date.now();
 
-
-  /*
-  Create callback function
-  */
 
   window[callbackName] =
     function(result) {
@@ -478,20 +555,11 @@ function getMemberData(memberId) {
     };
 
 
-  /*
-  Create script element
-  */
-
   const script =
     document.createElement(
       "script"
     );
 
-
-  /*
-  IMPORTANT:
-  JSONP REQUEST
-  */
 
   script.src =
     API_URL +
@@ -503,10 +571,6 @@ function getMemberData(memberId) {
     "&callback=" +
     callbackName;
 
-
-  /*
-  Connection error
-  */
 
   script.onerror =
     function() {
@@ -529,13 +593,89 @@ function getMemberData(memberId) {
     };
 
 
-  /*
-  Add request to page
-  */
-
   document.body.appendChild(
     script
   );
+
+}
+
+
+/*
+==================================================
+CHECK IF VALUE IS ZERO
+==================================================
+*/
+
+function setCreditValue(
+  elementId,
+  value,
+  suffix
+) {
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  /*
+  Remove previous zero formatting
+  */
+
+  element.classList.remove(
+    "zero"
+  );
+
+
+  /*
+  Display N/A when empty
+  */
+
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+
+    element.innerText =
+      "N/A";
+
+    return;
+
+  }
+
+
+  /*
+  Convert to string for checking
+  */
+
+  const cleanValue =
+    String(value).trim();
+
+
+  /*
+  ZERO = RED
+  */
+
+  if (
+    cleanValue === "0" ||
+    cleanValue === "0.0" ||
+    cleanValue === "0.00"
+  ) {
+
+    element.classList.add(
+      "zero"
+    );
+
+  }
+
+
+  /*
+  Display value
+  */
+
+  element.innerText =
+    cleanValue + suffix;
 
 }
 
@@ -610,42 +750,73 @@ function displayMember(result) {
   ANNUAL MEMBERSHIP CREDIT
   */
 
-  document.getElementById(
-    "annualCredit"
-  ).innerText =
-    result.annualCredit !== undefined &&
-    result.annualCredit !== null &&
-    result.annualCredit !== ""
-      ? result.annualCredit + " Days"
-      : "N/A";
+  setCreditValue(
+    "annualCredit",
+    result.annualCredit,
+    " Days"
+  );
 
 
   /*
   WORKOUT PLAN CREDIT
   */
 
-  document.getElementById(
-    "workoutCredit"
-  ).innerText =
-    result.workoutCredit !== undefined &&
-    result.workoutCredit !== null &&
-    result.workoutCredit !== ""
-      ? result.workoutCredit + " Credit"
-      : "N/A";
+  setCreditValue(
+    "workoutCredit",
+    result.workoutCredit,
+    " Credit"
+  );
 
 
   /*
   LOCKER CREDIT
   */
 
-  document.getElementById(
-    "lockerCredit"
-  ).innerText =
-    result.lockerCredit !== undefined &&
-    result.lockerCredit !== null &&
-    result.lockerCredit !== ""
-      ? result.lockerCredit
-      : "N/A";
+  const lockerElement =
+    document.getElementById(
+      "lockerCredit"
+    );
+
+
+  lockerElement.classList.remove(
+    "zero"
+  );
+
+
+  if (
+    result.lockerCredit === undefined ||
+    result.lockerCredit === null ||
+    result.lockerCredit === ""
+  ) {
+
+    lockerElement.innerText =
+      "N/A";
+
+  } else {
+
+    const lockerValue =
+      String(
+        result.lockerCredit
+      ).trim();
+
+
+    if (
+      lockerValue === "0" ||
+      lockerValue === "0.0" ||
+      lockerValue === "0.00"
+    ) {
+
+      lockerElement.classList.add(
+        "zero"
+      );
+
+    }
+
+
+    lockerElement.innerText =
+      lockerValue;
+
+  }
 
 
   /*
@@ -775,3 +946,4 @@ function showError(message) {
 </body>
 
 </html>
+```
