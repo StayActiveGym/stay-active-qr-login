@@ -1,132 +1,117 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Stay Active QR Login</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
-<style>
+<style> /* ================================================== GENERAL ================================================== */ * { box-sizing: border-box; } body { margin: 0; background: #000; color: white; font-family: Arial, sans-serif; text-align: center; } .container { width: 100%; max-width: 480px; margin: auto; padding: 20px; } /* ================================================== HEADER ================================================== */ h1 { margin: 5px 0; font-size: 32px; font-weight: 900; color: #FFD400; letter-spacing: 1px; } .subtitle { color: #aaa; margin-bottom: 20px; } h2 { color: white; margin-bottom: 20px; } /* ================================================== QR READER ================================================== */ #reader { width: 100%; background: #111; border: 2px solid #FFD400; border-radius: 15px; overflow: hidden; } /* ================================================== BUTTONS ================================================== */ button { width: 100%; padding: 16px; margin-top: 15px; border: 0; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; } #startButton { background: #FFD400; color: #000; } #startButton:hover { background: #FFE44D; } #scanAgain { display: none; background: #FFD400; color: #000; } #scanAgain:hover { background: #FFE44D; } /* ================================================== STATUS ================================================== */ #status { margin-top: 15px; padding: 15px; border-radius: 10px; background: #151515; border: 1px solid #333; color: #FFD400; font-weight: bold; } .error { background: #8B1111 !important; border-color: #FF3333 !important; color: white !important; } /* ================================================== RESULT ================================================== */ #result { display: none; margin-top: 20px; padding: 20px; background: #111; border: 2px solid #FFD400; border-radius: 15px; } .member-name { font-size: 28px; font-weight: 900; color: #FFD400; margin-bottom: 8px; } .member-id { color: #aaa; font-size: 14px; margin-bottom: 20px; } .info-row { display: flex; justify-content: space-between; align-items: center; background: #1b1b1b; padding: 14px; margin-top: 10px; border-radius: 10px; border: 1px solid #333; } .info-label { color: #aaa; text-align: left; } .info-value { color: #FFD400; font-size: 20px; font-weight: bold; } /* ================================================== ZERO CREDIT WARNING ================================================== */ .zero-credit { background: #8B0000 !important; border: 2px solid #FF2222 !important; color: white !important; animation: blinkZero 0.8s infinite; } .zero-credit .info-label, .zero-credit .info-value { color: white !important; } @keyframes blinkZero { 0% { opacity: 1; } 50% { opacity: 0.35; } 100% { opacity: 1; } } /* ================================================== LOCKER ================================================== */ .locker-none { color: #aaa !important; } /* ================================================== MOBILE ================================================== */ @media (max-width: 400px) { .container { padding: 15px; } h1 { font-size: 27px; } .member-name { font-size: 24px; } } </style>
 
-/* ==================================================
-   GENERAL
-================================================== */
+</head>
 
-* {
-  box-sizing: border-box;
-}
+<body>
 
-body {
-  margin: 0;
-  background: #000;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
+<div class="container">
 
-.container {
-  width: 100%;
-  max-width: 480px;
-  margin: auto;
-  padding: 20px;
-}
+<h1>STAY ACTIVE</h1>
 
+<div class="subtitle"> Lifestyle Fitness Gym </div>
 
-/* ==================================================
-   HEADER
-================================================== */
+<h2>Member QR Login</h2>
 
-h1 {
-  margin: 5px 0;
-  font-size: 32px;
-  font-weight: 900;
-  color: #FFD400;
-  letter-spacing: 1px;
-}
+<!-- ================================ QR SCANNER ================================= -->
 
-.subtitle {
-  color: #aaa;
-  margin-bottom: 20px;
-}
+<div id="reader"></div>
 
-h2 {
-  color: white;
-  margin-bottom: 20px;
-}
+<!-- ================================ STATUS ================================= -->
+
+<div id="status"> Ready to scan QR code. </div>
+
+<!-- ================================ START BUTTON ================================= -->
+
+<button id="startButton"> START SCANNER </button>
+
+<!-- ================================ RESULT ================================= -->
+
+<div id="result">
+
+<div class="member-name" id="memberName">
+  -
+</div>
+
+<div class="member-id" id="memberId">
+  Member ID: -
+</div>
 
 
-/* ==================================================
-   QR READER
-================================================== */
+<div class="info-row" id="annualRow">
 
-#reader {
-  width: 100%;
-  background: #111;
-  border: 2px solid #FFD400;
-  border-radius: 15px;
-  overflow: hidden;
-}
+  <span class="info-label">
+    Annual Membership
+  </span>
 
+  <span class="info-value" id="annualCredit">
+    -
+  </span>
 
-/* ==================================================
-   BUTTONS
-================================================== */
-
-button {
-  width: 100%;
-  padding: 16px;
-  margin-top: 15px;
-  border: 0;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#startButton {
-  background: #FFD400;
-  color: #000;
-}
-
-#startButton:hover {
-  background: #FFE44D;
-}
-
-#scanAgain {
-  display: none;
-  background: #FFD400;
-  color: #000;
-}
-
-#scanAgain:hover {
-  background: #FFE44D;
-}
+</div>
 
 
-/* ==================================================
-   STATUS
-================================================== */
+<div class="info-row" id="workoutRow">
 
-#status {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #151515;
-  border: 1px solid #333;
-  color: #FFD400;
-}
+  <span class="info-label">
+    Workout Credit
+  </span>
 
-.error {
-  background: #8B1111 !important;
-  border-color: #FF3333 !important;
-  color: white !important;
-}
+  <span class="info-value" id="workoutCredit">
+    -
+  </span>
+
+</div>
 
 
-/* ===============================*
+<div class="info-row" id="lockerRow">
+
+  <span class="info-label">
+    Locker
+  </span>
+
+  <span class="info-value" id="lockerCredit">
+    -
+  </span>
+
+</div>
+
+
+<div class="info-row">
+
+  <span class="info-label">
+    Contact
+  </span>
+
+  <span class="info-value" id="memberContact">
+    -
+  </span>
+
+</div>
+
+</div>
+
+<!-- ================================ SCAN AGAIN ================================= -->
+
+<button id="scanAgain"> SCAN AGAIN </button>
+
+</div>
+
+<script> /* ================================================== CONFIGURATION ================================================== */ /* IMPORTANT: Replace this URL with the SAME Google Apps Script / JSONP URL that your current working system uses. Example: const API_URL = "https://script.google.com/macros/s/XXXXXXXXXXXX/exec"; */ const API_URL = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_SCRIPT_ID/exec"; /* ================================================== VARIABLES ================================================== */ let scanner = null; let scannerRunning = false; let processing = false; /* ================================================== ELEMENTS ================================================== */ const reader = document.getElementById("reader"); const status = document.getElementById("status"); const result = document.getElementById("result"); const startButton = document.getElementById("startButton"); const scanAgain = document.getElementById("scanAgain"); /* ================================================== STATUS FUNCTION ================================================== */ function setStatus(message, error = false) { status.textContent = message; if (error) { status.classList.add("error"); } else { status.classList.remove("error"); } } /* ================================================== RESET RESULT ================================================== */ function resetResult() { result.style.display = "none"; document.getElementById("memberName").textContent = "-"; document.getElementById("memberId").textContent = "Member ID: -"; document.getElementById("memberContact").textContent = "-"; document.getElementById("annualCredit").textContent = "-"; document.getElementById("workoutCredit").textContent = "-"; document.getElementById("lockerCredit").textContent = "-"; document.getElementById("annualRow") .classList.remove("zero-credit"); document.getElementById("workoutRow") .classList.remove("zero-credit"); document.getElementById("lockerRow") .classList.remove("zero-credit"); } /* ================================================== CREDIT VALUE CHECK ================================================== */ function isZero(value) { if (value === null || value === undefined || value === "") { return false; } const text = String(value) .trim() .toLowerCase(); return ( text === "0" || text === "0.0" || text === "0.00" || text === "zero" ); } /* ================================================== DISPLAY RESULT ================================================== */ function displayMember(data) { result.style.display = "block"; /* MEMBER */ document.getElementById("memberName") .textContent = data.name || "-"; document.getElementById("memberId") .textContent = "Member ID: " + (data.memberId || "-"); document.getElementById("memberContact") .textContent = data.contact || "-"; /* ANNUAL */ const annual = data.annualCredit ?? "-"; document.getElementById("annualCredit") .textContent = annual; /* WORKOUT */ const workout = data.workoutCredit ?? "-"; document.getElementById("workoutCredit") .textContent = workout; /* LOCKER */ const locker = data.lockerCredit ?? "-"; document.getElementById("lockerCredit") .textContent = locker; /* ================================================== ZERO CREDIT BLINKING ================================================== */ const annualRow = document.getElementById("annualRow"); const workoutRow = document.getElementById("workoutRow"); const lockerRow = document.getElementById("lockerRow"); annualRow.classList.toggle( "zero-credit", isZero(annual) ); workoutRow.classList.toggle( "zero-credit", isZero(workout) ); /* Locker: "No Locker" is NOT considered zero. Only actual 0 will blink. */ lockerRow.classList.toggle( "zero-credit", isZero(locker) ); /* ================================================== STATUS ================================================== */ let warning = []; if (isZero(annual)) { warning.push("Annual Membership"); } if (isZero(workout)) { warning.push("Workout Credit"); } if (isZero(locker)) { warning.push("Locker"); } if (warning.length > 0) { setStatus( "WARNING: " + warning.join(", ") + " credit is already 0.", true ); } else { setStatus( "Member verified successfully." ); } } /* ================================================== LOOKUP MEMBER ================================================== */ function lookupMember(qrCode) { processing = true; setStatus("Checking member..."); /* JSONP callback name */ const callbackName = "stayActiveCallback_" + Date.now(); window[callbackName] = function(data) { try { if (!data) { setStatus( "No response from server.", true ); return; } if ( data.success === false || data.found === false ) { resetResult(); setStatus( data.message || "Member not found.", true ); return; } displayMember(data); } catch (error) { console.error(error); setStatus( "Error processing member data.", true ); } finally { delete window[callbackName]; const script = document.getElementById( callbackName ); if (script) { script.remove(); } processing = false; } }; /* JSONP REQUEST */ const script = document.createElement("script"); script.id = callbackName; script.src = API_URL + "?qr=" + encodeURIComponent(qrCode) + "&callback=" + callbackName; script.onerror = function() { setStatus( "Unable to connect to the member database.", true ); processing = false; delete window[callbackName]; script.remove(); }; document.body.appendChild(script); } /* ================================================== QR SUCCESS ================================================== */ function onScanSuccess(decodedText) { if (processing) { return; } if (!decodedText) { return; } console.log( "QR Code:", decodedText ); setStatus( "QR detected. Checking member..." ); stopScanner(); lookupMember( decodedText.trim() ); } /* ================================================== QR ERROR ================================================== */ function onScanError(errorMessage) { /* Ignore normal scanning errors. html5-qrcode constantly reports "QR code not found" while scanning. */ } /* ================================================== START SCANNER ================================================== */ function startScanner() { if (scannerRunning) { return; } resetResult(); processing = false; scanner = new Html5Qrcode("reader"); const config = { fps: 10, qrbox: function( viewfinderWidth, viewfinderHeight ) { const size = Math.min( viewfinderWidth, viewfinderHeight ) * 0.75; return { width: size, height: size }; }, aspectRatio: 1.0 }; scanner.start( { facingMode: "environment" }, config, onScanSuccess, onScanError ) .then(function() { scannerRunning = true; startButton.style.display = "none"; scanAgain.style.display = "none"; setStatus( "Scanner ready. Point the camera at the member QR code." ); }) .catch(function(error) { console.error(error); scannerRunning = false; setStatus( "Camera could not be started. Please allow camera permission.", true ); }); } /* ================================================== STOP SCANNER ================================================== */ function stopScanner() { if ( !scanner || !scannerRunning ) { return; } scanner.stop() .then(function() { scannerRunning = false; }) .catch(function(error) { console.error( "Scanner stop error:", error ); scannerRunning = false; }); } /* ================================================== START BUTTON ================================================== */ startButton.addEventListener( "click", function() { startScanner(); } ); /* ================================================== SCAN AGAIN ================================================== */ scanAgain.addEventListener( "click", function() { resetResult(); startScanner(); } ); /* ================================================== INITIAL STATUS ================================================== */ setStatus( "Ready. Click START SCANNER." ); </script>
+
+</body>
+
+</html>
