@@ -14,127 +14,543 @@
 
 <style>
 
+/* ==================================================
+   STAY ACTIVE COLOR THEME
+================================================== */
+
+:root {
+
+  --yellow: #FFD400;
+  --yellow-dark: #E6BD00;
+
+  --black: #000000;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #222222;
+
+  --white: #FFFFFF;
+  --gray: #AAAAAA;
+
+  --green: #075C31;
+  --red: #FF1E1E;
+
+}
+
+
+/* ==================================================
+   GENERAL
+================================================== */
+
 * {
   box-sizing: border-box;
 }
 
+
 body {
+
   margin: 0;
-  background: #111;
-  color: white;
-  font-family: Arial, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #222 0%,
+      #111 45%,
+      #000 100%
+    );
+
+  color: var(--white);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   text-align: center;
+
+  min-height: 100vh;
+
 }
+
+
+/* ==================================================
+   CONTAINER
+================================================== */
 
 .container {
+
   width: 100%;
-  max-width: 480px;
+
+  max-width: 500px;
+
   margin: auto;
+
   padding: 20px;
+
 }
+
+
+/* ==================================================
+   HEADER
+================================================== */
 
 h1 {
-  margin: 5px 0;
-  font-size: 30px;
+
+  margin: 5px 0 0;
+
+  font-size: 34px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  color: var(--yellow);
+
+  text-shadow:
+    0 0 10px rgba(255,212,0,0.25);
+
 }
+
 
 .subtitle {
-  color: #aaa;
-  margin-bottom: 20px;
+
+  color: #BBBBBB;
+
+  margin-top: 3px;
+
+  margin-bottom: 22px;
+
+  font-size: 14px;
+
+  letter-spacing: 1px;
+
 }
+
+
+h2 {
+
+  margin: 0 0 18px;
+
+  font-size: 23px;
+
+  color: var(--white);
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* ==================================================
+   QR SCANNER
+================================================== */
 
 #reader {
+
   width: 100%;
+
   background: #000;
+
+  border: 3px solid var(--yellow);
+
   border-radius: 15px;
+
   overflow: hidden;
+
+  box-shadow:
+    0 0 15px rgba(255,212,0,0.15);
+
 }
+
+
+/* Try to keep scanner text readable */
+
+#reader * {
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif !important;
+
+}
+
+
+/* ==================================================
+   BUTTONS
+================================================== */
 
 button {
+
   width: 100%;
-  padding: 16px;
+
+  padding: 17px;
+
   margin-top: 15px;
+
   border: 0;
+
   border-radius: 10px;
+
   font-size: 17px;
-  font-weight: bold;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
 }
+
+
+button:active {
+
+  transform: scale(0.98);
+
+}
+
 
 #startButton {
-  background: white;
-  color: black;
+
+  background: var(--yellow);
+
+  color: #000;
+
+  box-shadow:
+    0 4px 0 var(--yellow-dark);
+
 }
+
+
+#startButton:hover {
+
+  background: #FFE13B;
+
+}
+
 
 #scanAgain {
+
   display: none;
-  background: #333;
-  color: white;
+
+  background: var(--yellow);
+
+  color: #000;
+
+  box-shadow:
+    0 4px 0 var(--yellow-dark);
+
 }
+
+
+/* ==================================================
+   STATUS
+================================================== */
 
 #status {
+
   margin-top: 15px;
+
   padding: 15px;
+
   border-radius: 10px;
-  background: #222;
+
+  background: var(--dark3);
+
+  border: 1px solid #444;
+
+  color: var(--yellow);
+
+  font-weight: bold;
+
+  min-height: 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
 }
+
+
+/* ==================================================
+   ERROR
+================================================== */
 
 .error {
-  background: #8b1111 !important;
+
+  background: #4D0000 !important;
+
+  border: 2px solid var(--red) !important;
+
+  color: #FFFFFF !important;
+
 }
+
+
+/* ==================================================
+   MEMBER INFORMATION
+================================================== */
 
 #member {
+
   display: none;
+
   margin-top: 20px;
+
   padding: 20px;
+
   border-radius: 15px;
-  background: #075c31;
+
+  background:
+    linear-gradient(
+      145deg,
+      #086B39,
+      #064B29
+    );
+
+  border: 2px solid var(--yellow);
+
+  box-shadow:
+    0 0 18px rgba(255,212,0,0.12);
+
 }
+
+
+/* ==================================================
+   SUCCESS
+================================================== */
 
 .success {
+
   font-size: 22px;
-  font-weight: bold;
+
+  font-weight: 900;
+
   margin-bottom: 15px;
+
+  color: var(--yellow);
+
 }
+
+
+/* ==================================================
+   MEMBER NAME
+================================================== */
 
 .member-name {
-  font-size: 26px;
-  font-weight: bold;
-  margin: 10px 0;
+
+  font-size: 28px;
+
+  font-weight: 900;
+
+  margin: 10px 0 5px;
+
+  color: #FFFFFF;
+
 }
+
+
+/* ==================================================
+   MEMBER ID
+================================================== */
 
 .member-id {
+
   font-size: 20px;
-  font-weight: bold;
+
+  font-weight: 800;
+
   margin-bottom: 20px;
+
+  color: var(--yellow);
+
 }
+
+
+/* ==================================================
+   INFO BOX
+================================================== */
 
 .info-box {
-  background: rgba(0,0,0,0.25);
+
+  background:
+    rgba(0,0,0,0.35);
+
   border-radius: 12px;
+
   padding: 10px 15px;
+
   text-align: left;
+
 }
+
+
+/* ==================================================
+   INFO ROW
+================================================== */
 
 .info-row {
+
   padding: 15px 5px;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,0.15);
+
 }
+
 
 .info-row:last-child {
+
   border-bottom: none;
+
 }
+
+
+/* ==================================================
+   LABEL
+================================================== */
 
 .label {
+
   font-size: 13px;
-  color: #ccc;
+
+  color: #CCCCCC;
+
   text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
 }
 
+
+/* ==================================================
+   VALUE
+================================================== */
+
 .value {
-  font-size: 21px;
-  font-weight: bold;
+
+  font-size: 22px;
+
+  font-weight: 900;
+
   margin-top: 5px;
+
+  color: #FFFFFF;
+
 }
+
+
+/* ==================================================
+   ZERO VALUE
+   RED + CONTINUOUS BLINK
+================================================== */
+
+.zero-value {
+
+  color: #FF1E1E !important;
+
+  font-weight: 900;
+
+  animation:
+    zeroBlink 0.8s infinite;
+
+}
+
+
+/* ==================================================
+   BLINK ANIMATION
+================================================== */
+
+@keyframes zeroBlink {
+
+  0%,
+  45% {
+
+    opacity: 1;
+
+    text-shadow:
+      0 0 8px rgba(255,0,0,0.9);
+
+  }
+
+  50%,
+  100% {
+
+    opacity: 0.25;
+
+    text-shadow: none;
+
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 400px) {
+
+  .container {
+
+    padding: 15px;
+
+  }
+
+  h1 {
+
+    font-size: 30px;
+
+  }
+
+  h2 {
+
+    font-size: 21px;
+
+  }
+
+  .member-name {
+
+    font-size: 25px;
+
+  }
+
+  .value {
+
+    font-size: 20px;
+
+  }
+
+}
+
+
+/* ==================================================
+   HIDE CAMERA START TEXT GENERATED BY LIBRARY
+================================================== */
+
+#reader__dashboard_section_csr button {
+
+  background: var(--yellow) !important;
+
+  color: #000 !important;
+
+  border: none !important;
+
+  border-radius: 8px !important;
+
+  font-weight: bold !important;
+
+}
+
+
+#reader__dashboard_section_swaplink {
+
+  color: var(--yellow) !important;
+
+}
+
 
 </style>
 
@@ -143,130 +559,202 @@ button {
 
 <body>
 
+
 <div class="container">
 
-<h1>STAY ACTIVE</h1>
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<h1>
+  STAY ACTIVE
+</h1>
+
 
 <div class="subtitle">
-Lifestyle Fitness Gym
+  Lifestyle Fitness Gym
 </div>
 
-<h2>MEMBER LOGIN</h2>
 
+<h2>
+  MEMBER LOGIN
+</h2>
+
+
+<!-- ==================================================
+     QR SCANNER
+================================================== -->
 
 <div id="reader"></div>
 
 
-<button id="startButton"
-        onclick="startScanner()">
+<!-- ==================================================
+     START SCANNER
+================================================== -->
 
-📷 START SCANNER
+<button
+  id="startButton"
+  onclick="startScanner()">
+
+  📷 START SCANNER
 
 </button>
 
 
+<!-- ==================================================
+     STATUS
+================================================== -->
+
 <div id="status">
 
-Press START SCANNER
+  Press START SCANNER
 
 </div>
 
 
-<!-- MEMBER INFORMATION -->
+<!-- ==================================================
+     MEMBER INFORMATION
+================================================== -->
 
 <div id="member">
 
-<div class="success">
-✅ LOGIN SUCCESSFUL
+
+  <div class="success">
+
+    ✅ LOGIN SUCCESSFUL
+
+  </div>
+
+
+  <div
+    class="member-name"
+    id="memberName">
+
+  </div>
+
+
+  <div
+    class="member-id"
+    id="memberId">
+
+  </div>
+
+
+  <div class="info-box">
+
+
+    <!-- ==========================================
+         ANNUAL
+    =========================================== -->
+
+    <div class="info-row">
+
+      <div class="label">
+
+        Annual Membership Credit
+
+      </div>
+
+
+      <div
+        class="value"
+        id="annualCredit">
+
+        N/A
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         WORKOUT
+    =========================================== -->
+
+    <div class="info-row">
+
+      <div class="label">
+
+        Gym Workout Plan Credit
+
+      </div>
+
+
+      <div
+        class="value"
+        id="workoutCredit">
+
+        N/A
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         LOCKER
+    =========================================== -->
+
+    <div class="info-row">
+
+      <div class="label">
+
+        Locker Rental Credit
+
+      </div>
+
+
+      <div
+        class="value"
+        id="lockerCredit">
+
+        N/A
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         LOGIN TIME
+    =========================================== -->
+
+    <div class="info-row">
+
+      <div class="label">
+
+        Login Time
+
+      </div>
+
+
+      <div
+        class="value"
+        id="loginTime">
+
+        N/A
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
 </div>
 
 
-<div class="member-name"
-     id="memberName">
-</div>
+<!-- ==================================================
+     SCAN NEXT
+================================================== -->
 
+<button
+  id="scanAgain"
+  onclick="resetScanner()">
 
-<div class="member-id"
-     id="memberId">
-</div>
-
-
-<div class="info-box">
-
-
-<!-- ANNUAL -->
-
-<div class="info-row">
-
-<div class="label">
-Annual Membership Credit
-</div>
-
-<div class="value"
-     id="annualCredit">
-N/A
-</div>
-
-</div>
-
-
-<!-- WORKOUT -->
-
-<div class="info-row">
-
-<div class="label">
-Gym Workout Plan Credit
-</div>
-
-<div class="value"
-     id="workoutCredit">
-N/A
-</div>
-
-</div>
-
-
-<!-- LOCKER -->
-
-<div class="info-row">
-
-<div class="label">
-Locker Rental Credit
-</div>
-
-<div class="value"
-     id="lockerCredit">
-N/A
-</div>
-
-</div>
-
-
-<!-- LOGIN TIME -->
-
-<div class="info-row">
-
-<div class="label">
-Login Time
-</div>
-
-<div class="value"
-     id="loginTime">
-N/A
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<button id="scanAgain"
-        onclick="resetScanner()">
-
-📷 SCAN NEXT MEMBER
+  📷 SCAN NEXT MEMBER
 
 </button>
 
@@ -275,6 +763,7 @@ N/A
 
 
 <script>
+
 
 /*
 ==================================================
@@ -301,24 +790,30 @@ function startScanner() {
 
   processing = false;
 
+
   document.getElementById(
     "startButton"
   ).style.display = "none";
+
 
   document.getElementById(
     "scanAgain"
   ).style.display = "none";
 
+
   document.getElementById(
     "member"
   ).style.display = "none";
+
 
   showStatus(
     "Opening camera..."
   );
 
+
   scanner =
     new Html5Qrcode("reader");
+
 
   scanner.start(
 
@@ -327,36 +822,50 @@ function startScanner() {
     },
 
     {
+
       fps: 10,
 
       qrbox: {
+
         width: 250,
+
         height: 250
+
       }
 
     },
 
+
     function(decodedText) {
 
+
       if (processing) {
+
         return;
+
       }
 
+
       processing = true;
+
 
       processMember(
         decodedText.trim()
       );
 
+
     },
+
 
     function(errorMessage) {
 
-      // Ignore normal QR errors
+      // Ignore normal QR scanning errors
 
     }
 
+
   )
+
 
   .then(function() {
 
@@ -366,11 +875,13 @@ function startScanner() {
 
   })
 
+
   .catch(function(error) {
 
     showError(
       "CAMERA ERROR: " + error
     );
+
 
     document.getElementById(
       "startButton"
@@ -446,6 +957,7 @@ GET DATA FROM APPS SCRIPT
 
 function getMemberData(memberId) {
 
+
   /*
   Create unique JSONP callback
   */
@@ -461,6 +973,7 @@ function getMemberData(memberId) {
 
   window[callbackName] =
     function(result) {
+
 
       console.log(
         "APPS SCRIPT RESULT:",
@@ -489,7 +1002,6 @@ function getMemberData(memberId) {
 
 
   /*
-  IMPORTANT:
   JSONP REQUEST
   */
 
@@ -511,18 +1023,23 @@ function getMemberData(memberId) {
   script.onerror =
     function() {
 
+
       showError(
         "Unable to connect to Apps Script."
       );
 
+
       processing = false;
+
 
       document.getElementById(
         "scanAgain"
       ).style.display =
         "block";
 
+
       delete window[callbackName];
+
 
       script.remove();
 
@@ -542,11 +1059,121 @@ function getMemberData(memberId) {
 
 /*
 ==================================================
+SET CREDIT VALUE
+==================================================
+
+If the value is 0:
+
+RED + CONTINUOUS BLINK
+
+Examples:
+
+0
+0 Days
+0 Credit
+
+==================================================
+*/
+
+function setCreditValue(
+  elementId,
+  value,
+  suffix
+) {
+
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  /*
+  Remove previous zero styling
+  */
+
+  element.classList.remove(
+    "zero-value"
+  );
+
+
+  /*
+  Check empty value
+  */
+
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+
+    element.innerText = "N/A";
+
+    return;
+
+  }
+
+
+  /*
+  Convert to text
+  */
+
+  const text =
+    String(value).trim();
+
+
+  /*
+  Detect numeric zero
+
+  This catches:
+
+  0
+  0.0
+  "0"
+  "0.00"
+  */
+
+  const numericValue =
+    Number(text);
+
+
+  const isZero =
+    !isNaN(numericValue) &&
+    numericValue === 0;
+
+
+  /*
+  Display value
+  */
+
+  element.innerText =
+    text +
+    suffix;
+
+
+  /*
+  Apply RED + BLINK
+  */
+
+  if (isZero) {
+
+    element.classList.add(
+      "zero-value"
+    );
+
+  }
+
+}
+
+
+/*
+==================================================
 DISPLAY MEMBER
 ==================================================
 */
 
 function displayMember(result) {
+
 
   console.log(
     "DISPLAY RESULT:",
@@ -554,11 +1181,16 @@ function displayMember(result) {
   );
 
 
+  /*
+  No response
+  */
+
   if (!result) {
 
     showError(
       "No response received."
     );
+
 
     processing = false;
 
@@ -566,6 +1198,10 @@ function displayMember(result) {
 
   }
 
+
+  /*
+  MEMBER NOT FOUND
+  */
 
   if (!result.success) {
 
@@ -574,12 +1210,15 @@ function displayMember(result) {
       "Member not found."
     );
 
+
     processing = false;
+
 
     document.getElementById(
       "scanAgain"
     ).style.display =
       "block";
+
 
     return;
 
@@ -587,7 +1226,9 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   NAME
+  ================================================
   */
 
   document.getElementById(
@@ -597,7 +1238,9 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   MEMBER ID
+  ================================================
   */
 
   document.getElementById(
@@ -607,49 +1250,66 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   ANNUAL MEMBERSHIP CREDIT
+  ================================================
   */
 
-  document.getElementById(
-    "annualCredit"
-  ).innerText =
-    result.annualCredit !== undefined &&
-    result.annualCredit !== null &&
-    result.annualCredit !== ""
-      ? result.annualCredit + " Days"
-      : "N/A";
+  setCreditValue(
+
+    "annualCredit",
+
+    result.annualCredit,
+
+    " Days"
+
+  );
 
 
   /*
+  ================================================
   WORKOUT PLAN CREDIT
+  ================================================
   */
 
-  document.getElementById(
-    "workoutCredit"
-  ).innerText =
-    result.workoutCredit !== undefined &&
-    result.workoutCredit !== null &&
-    result.workoutCredit !== ""
-      ? result.workoutCredit + " Credit"
-      : "N/A";
+  setCreditValue(
+
+    "workoutCredit",
+
+    result.workoutCredit,
+
+    " Credit"
+
+  );
 
 
   /*
+  ================================================
   LOCKER CREDIT
+  ================================================
+
+  "No Locker" will NOT blink.
+
+  Only a numeric 0 will blink.
+
+  ================================================
   */
 
-  document.getElementById(
-    "lockerCredit"
-  ).innerText =
-    result.lockerCredit !== undefined &&
-    result.lockerCredit !== null &&
-    result.lockerCredit !== ""
-      ? result.lockerCredit
-      : "N/A";
+  setCreditValue(
+
+    "lockerCredit",
+
+    result.lockerCredit,
+
+    ""
+
+  );
 
 
   /*
+  ================================================
   LOGIN TIME
+  ================================================
   */
 
   document.getElementById(
@@ -659,7 +1319,9 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   SHOW MEMBER
+  ================================================
   */
 
   document.getElementById(
@@ -669,7 +1331,9 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   HIDE STATUS
+  ================================================
   */
 
   document.getElementById(
@@ -679,7 +1343,9 @@ function displayMember(result) {
 
 
   /*
+  ================================================
   SHOW SCAN AGAIN
+  ================================================
   */
 
   document.getElementById(
@@ -698,25 +1364,71 @@ RESET
 
 function resetScanner() {
 
+
   processing = false;
+
+
+  /*
+  Hide member information
+  */
 
   document.getElementById(
     "member"
   ).style.display =
     "none";
 
+
+  /*
+  Hide scan again
+  */
+
   document.getElementById(
     "scanAgain"
   ).style.display =
     "none";
+
+
+  /*
+  Show start scanner
+  */
 
   document.getElementById(
     "startButton"
   ).style.display =
     "block";
 
+
+  /*
+  Reset status
+  */
+
   showStatus(
     "Press START SCANNER"
+  );
+
+
+  /*
+  Clear zero blinking
+  */
+
+  document.getElementById(
+    "annualCredit"
+  ).classList.remove(
+    "zero-value"
+  );
+
+
+  document.getElementById(
+    "workoutCredit"
+  ).classList.remove(
+    "zero-value"
+  );
+
+
+  document.getElementById(
+    "lockerCredit"
+  ).classList.remove(
+    "zero-value"
   );
 
 }
@@ -730,18 +1442,22 @@ STATUS
 
 function showStatus(message) {
 
+
   const status =
     document.getElementById(
       "status"
     );
 
+
   status.className = "";
+
 
   status.innerText =
     message;
 
+
   status.style.display =
-    "block";
+    "flex";
 
 }
 
@@ -754,23 +1470,29 @@ ERROR
 
 function showError(message) {
 
+
   const status =
     document.getElementById(
       "status"
     );
 
+
   status.className =
     "error";
+
 
   status.innerText =
     message;
 
+
   status.style.display =
-    "block";
+    "flex";
 
 }
 
+
 </script>
+
 
 </body>
 
