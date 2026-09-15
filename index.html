@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -140,4 +141,858 @@ button {
 .success {
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 15px
+  margin-bottom: 15px;
+  color: #FFD400;
+}
+
+.member-name {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: white;
+}
+
+.member-id {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #FFD400;
+}
+
+
+/* ==========================================
+   INFORMATION BOX
+========================================== */
+
+.info-box {
+  background: #000;
+  border-radius: 12px;
+  padding: 10px 15px;
+  text-align: left;
+  border: 1px solid #333;
+}
+
+.info-row {
+  padding: 15px 5px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 13px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.value {
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 5px;
+  color: #FFD400;
+}
+
+
+/* ==========================================
+   ZERO CREDIT ALERT
+========================================== */
+
+.value.zero {
+  color: #ff2020 !important;
+  animation: zeroBlink 0.8s infinite;
+}
+
+
+/*
+   Red blinking effect
+*/
+
+@keyframes zeroBlink {
+
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .member-name {
+    font-size: 24px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>STAY ACTIVE</h1>
+
+<div class="subtitle">
+Lifestyle Fitness Gym
+</div>
+
+<h2>MEMBER LOGIN</h2>
+
+
+<div id="reader"></div>
+
+
+<button id="startButton"
+        onclick="startScanner()">
+
+📷 START SCANNER
+
+</button>
+
+
+<div id="status">
+
+Press START SCANNER
+
+</div>
+
+
+<!-- MEMBER INFORMATION -->
+
+<div id="member">
+
+<div class="success">
+✅ LOGIN SUCCESSFUL
+</div>
+
+
+<div class="member-name"
+     id="memberName">
+</div>
+
+
+<div class="member-id"
+     id="memberId">
+</div>
+
+
+<div class="info-box">
+
+
+<!-- ANNUAL -->
+
+<div class="info-row">
+
+<div class="label">
+Annual Membership Credit
+</div>
+
+<div class="value"
+     id="annualCredit">
+N/A
+</div>
+
+</div>
+
+
+<!-- WORKOUT -->
+
+<div class="info-row">
+
+<div class="label">
+Gym Workout Plan Credit
+</div>
+
+<div class="value"
+     id="workoutCredit">
+N/A
+</div>
+
+</div>
+
+
+<!-- LOCKER -->
+
+<div class="info-row">
+
+<div class="label">
+Locker Rental Credit
+</div>
+
+<div class="value"
+     id="lockerCredit">
+N/A
+</div>
+
+</div>
+
+
+<!-- LOGIN TIME -->
+
+<div class="info-row">
+
+<div class="label">
+Login Time
+</div>
+
+<div class="value"
+     id="loginTime">
+N/A
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<button id="scanAgain"
+        onclick="resetScanner()">
+
+📷 SCAN NEXT MEMBER
+
+</button>
+
+
+</div>
+
+
+<script>
+
+/*
+==================================================
+GOOGLE APPS SCRIPT
+==================================================
+*/
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxam82_ho5kvQZZGE7oWT5duGCnK5XXQAmJzWL7mZIp1OSX6Sk5yd63bmm7m0FZWd5m/exec";
+
+
+let scanner = null;
+
+let processing = false;
+
+
+/*
+==================================================
+START CAMERA
+==================================================
+*/
+
+function startScanner() {
+
+  processing = false;
+
+  document.getElementById(
+    "startButton"
+  ).style.display = "none";
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display = "none";
+
+  document.getElementById(
+    "member"
+  ).style.display = "none";
+
+  showStatus(
+    "Opening camera..."
+  );
+
+  scanner =
+    new Html5Qrcode("reader");
+
+  scanner.start(
+
+    {
+      facingMode: "environment"
+    },
+
+    {
+      fps: 10,
+
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+
+    },
+
+    function(decodedText) {
+
+      if (processing) {
+        return;
+      }
+
+      processing = true;
+
+      processMember(
+        decodedText.trim()
+      );
+
+    },
+
+    function(errorMessage) {
+
+      // Ignore normal QR errors
+
+    }
+
+  )
+
+  .then(function() {
+
+    showStatus(
+      "📷 Scan Member QR Code"
+    );
+
+  })
+
+  .catch(function(error) {
+
+    showError(
+      "CAMERA ERROR: " + error
+    );
+
+    document.getElementById(
+      "startButton"
+    ).style.display = "block";
+
+  });
+
+}
+
+
+/*
+==================================================
+PROCESS QR
+==================================================
+*/
+
+function processMember(memberId) {
+
+  showStatus(
+    "Checking Member ID: " +
+    memberId
+  );
+
+
+  stopScanner(function() {
+
+    getMemberData(memberId);
+
+  });
+
+}
+
+
+/*
+==================================================
+STOP CAMERA
+==================================================
+*/
+
+function stopScanner(callback) {
+
+  if (!scanner) {
+
+    callback();
+
+    return;
+
+  }
+
+
+  scanner.stop()
+
+  .then(function() {
+
+    callback();
+
+  })
+
+  .catch(function() {
+
+    callback();
+
+  });
+
+}
+
+
+/*
+==================================================
+GET DATA FROM APPS SCRIPT
+==================================================
+*/
+
+function getMemberData(memberId) {
+
+  const callbackName =
+    "stayActive_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(result) {
+
+      console.log(
+        "APPS SCRIPT RESULT:",
+        result
+      );
+
+
+      displayMember(
+        result
+      );
+
+
+      delete window[callbackName];
+
+    };
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src =
+    API_URL +
+    "?action=login" +
+    "&memberId=" +
+    encodeURIComponent(
+      memberId
+    ) +
+    "&callback=" +
+    callbackName;
+
+
+  script.onerror =
+    function() {
+
+      showError(
+        "Unable to connect to Apps Script."
+      );
+
+      processing = false;
+
+      document.getElementById(
+        "scanAgain"
+      ).style.display =
+        "block";
+
+      delete window[callbackName];
+
+      script.remove();
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/*
+==================================================
+CHECK IF VALUE IS ZERO
+==================================================
+*/
+
+function setCreditValue(
+  elementId,
+  value,
+  suffix
+) {
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  /*
+  ALWAYS REMOVE PREVIOUS ZERO STATE
+  */
+
+  element.classList.remove(
+    "zero"
+  );
+
+
+  /*
+  EMPTY VALUE
+  */
+
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+
+    element.innerText =
+      "N/A";
+
+    return;
+
+  }
+
+
+  /*
+  CONVERT TO STRING
+  */
+
+  const cleanValue =
+    String(value).trim();
+
+
+  /*
+  ZERO = RED + BLINK
+  */
+
+  if (
+    cleanValue === "0" ||
+    cleanValue === "0.0" ||
+    cleanValue === "0.00"
+  ) {
+
+    element.classList.add(
+      "zero"
+    );
+
+  }
+
+
+  /*
+  DISPLAY VALUE
+  */
+
+  element.innerText =
+    cleanValue + suffix;
+
+}
+
+
+/*
+==================================================
+DISPLAY MEMBER
+==================================================
+*/
+
+function displayMember(result) {
+
+  console.log(
+    "DISPLAY RESULT:",
+    result
+  );
+
+
+  if (!result) {
+
+    showError(
+      "No response received."
+    );
+
+    processing = false;
+
+    return;
+
+  }
+
+
+  if (!result.success) {
+
+    showError(
+      result.message ||
+      "Member not found."
+    );
+
+    processing = false;
+
+    document.getElementById(
+      "scanAgain"
+    ).style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  /*
+  NAME
+  */
+
+  document.getElementById(
+    "memberName"
+  ).innerText =
+    result.name || "N/A";
+
+
+  /*
+  MEMBER ID
+  */
+
+  document.getElementById(
+    "memberId"
+  ).innerText =
+    result.memberId || "N/A";
+
+
+  /*
+  ANNUAL MEMBERSHIP CREDIT
+  */
+
+  setCreditValue(
+    "annualCredit",
+    result.annualCredit,
+    " Days"
+  );
+
+
+  /*
+  WORKOUT PLAN CREDIT
+  */
+
+  setCreditValue(
+    "workoutCredit",
+    result.workoutCredit,
+    " Credit"
+  );
+
+
+  /*
+  LOCKER CREDIT
+  */
+
+  const lockerElement =
+    document.getElementById(
+      "lockerCredit"
+    );
+
+
+  /*
+  REMOVE PREVIOUS BLINK
+  */
+
+  lockerElement.classList.remove(
+    "zero"
+  );
+
+
+  if (
+    result.lockerCredit === undefined ||
+    result.lockerCredit === null ||
+    result.lockerCredit === ""
+  ) {
+
+    lockerElement.innerText =
+      "N/A";
+
+  } else {
+
+    const lockerValue =
+      String(
+        result.lockerCredit
+      ).trim();
+
+
+    /*
+    ZERO = RED + BLINK
+    */
+
+    if (
+      lockerValue === "0" ||
+      lockerValue === "0.0" ||
+      lockerValue === "0.00"
+    ) {
+
+      lockerElement.classList.add(
+        "zero"
+      );
+
+    }
+
+
+    lockerElement.innerText =
+      lockerValue;
+
+  }
+
+
+  /*
+  LOGIN TIME
+  */
+
+  document.getElementById(
+    "loginTime"
+  ).innerText =
+    result.timestamp || "N/A";
+
+
+  /*
+  SHOW MEMBER
+  */
+
+  document.getElementById(
+    "member"
+  ).style.display =
+    "block";
+
+
+  /*
+  HIDE STATUS
+  */
+
+  document.getElementById(
+    "status"
+  ).style.display =
+    "none";
+
+
+  /*
+  SHOW SCAN AGAIN
+  */
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display =
+    "block";
+
+}
+
+
+/*
+==================================================
+RESET
+==================================================
+*/
+
+function resetScanner() {
+
+  processing = false;
+
+
+  /*
+  REMOVE ANY ZERO BLINKING
+  */
+
+  document
+    .querySelectorAll(".value")
+    .forEach(function(element) {
+
+      element.classList.remove(
+        "zero"
+      );
+
+    });
+
+
+  document.getElementById(
+    "member"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "scanAgain"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "startButton"
+  ).style.display =
+    "block";
+
+  showStatus(
+    "Press START SCANNER"
+  );
+
+}
+
+
+/*
+==================================================
+STATUS
+==================================================
+*/
+
+function showStatus(message) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+  status.className = "";
+
+  status.innerText =
+    message;
+
+  status.style.display =
+    "block";
+
+}
+
+
+/*
+==================================================
+ERROR
+==================================================
+*/
+
+function showError(message) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+  status.className =
+    "error";
+
+  status.innerText =
+    message;
+
+  status.style.display =
+    "block";
+
+}
+
+</script>
+
+</body>
+
+</html>
+```
