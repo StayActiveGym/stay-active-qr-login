@@ -72,8 +72,10 @@ body {
   width: 100%;
   max-width: 500px;
   margin: 0 auto 20px auto;
+
   border: 3px solid #ffd400 !important;
   border-radius: 15px;
+
   overflow: hidden;
   background: #111;
 }
@@ -101,9 +103,12 @@ body {
 
 .member-card {
   display: none;
+
   background: #111;
+
   border: 1px solid #333;
   border-radius: 15px;
+
   padding: 20px;
   margin-top: 20px;
 }
@@ -119,10 +124,14 @@ body {
 
 .member-name {
   text-align: center;
+
   font-size: 28px;
   font-weight: 900;
+
   color: #ffd400;
+
   margin-bottom: 20px;
+
   word-break: break-word;
 }
 
@@ -133,8 +142,10 @@ body {
 
 .info-row {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
   gap: 15px;
 
   padding: 13px 0;
@@ -146,16 +157,21 @@ body {
   border-bottom: none;
 }
 
+
 .label {
   color: #999;
   font-size: 15px;
 }
 
+
 .value {
   color: #fff;
+
   font-size: 17px;
   font-weight: 800;
+
   text-align: right;
+
   word-break: break-word;
 }
 
@@ -165,9 +181,13 @@ body {
 ================================================== */
 
 .zero-value {
+
   color: #ff2222 !important;
+
   animation: blinkZero 0.8s infinite;
+
 }
+
 
 @keyframes blinkZero {
 
@@ -191,7 +211,9 @@ body {
 ================================================== */
 
 .scan-again {
+
   width: 100%;
+
   margin-top: 20px;
 
   padding: 15px;
@@ -208,6 +230,7 @@ body {
   cursor: pointer;
 }
 
+
 .scan-again:hover {
   background: #fff;
 }
@@ -218,10 +241,15 @@ body {
 ================================================== */
 
 .error {
+
   color: #ff3333;
+
   text-align: center;
+
   font-weight: 700;
+
   margin-top: 15px;
+
 }
 
 
@@ -264,7 +292,9 @@ body {
 <div class="container">
 
 
-  <!-- HEADER -->
+  <!-- ==================================================
+       HEADER
+  ================================================== -->
 
   <div class="header">
 
@@ -275,12 +305,16 @@ body {
   </div>
 
 
-  <!-- SCANNER -->
+  <!-- ==================================================
+       QR SCANNER
+  ================================================== -->
 
   <div id="reader"></div>
 
 
-  <!-- STATUS -->
+  <!-- ==================================================
+       STATUS
+  ================================================== -->
 
   <div id="status"
        class="status active">
@@ -290,24 +324,31 @@ body {
   </div>
 
 
-  <!-- ERROR -->
+  <!-- ==================================================
+       ERROR
+  ================================================== -->
 
   <div id="error"
        class="error">
   </div>
 
 
-  <!-- MEMBER INFORMATION -->
+  <!-- ==================================================
+       MEMBER INFORMATION
+  ================================================== -->
 
   <div id="memberCard"
        class="member-card">
 
 
+    <!-- MEMBER NAME -->
+
     <div id="memberName"
          class="member-name">
-
     </div>
 
+
+    <!-- MEMBER ID -->
 
     <div class="info-row">
 
@@ -322,18 +363,7 @@ body {
     </div>
 
 
-    <div class="info-row">
-
-      <div class="label">
-        Contact
-      </div>
-
-      <div id="contact"
-           class="value">
-      </div>
-
-    </div>
-
+    <!-- ANNUAL MEMBERSHIP CREDIT -->
 
     <div class="info-row">
 
@@ -348,6 +378,8 @@ body {
     </div>
 
 
+    <!-- GYM WORKOUT PLAN CREDIT -->
+
     <div class="info-row">
 
       <div class="label">
@@ -360,6 +392,8 @@ body {
 
     </div>
 
+
+    <!-- LOCKER RENTAL CREDIT -->
 
     <div class="info-row">
 
@@ -374,6 +408,8 @@ body {
     </div>
 
 
+    <!-- PROFESSIONAL TRAINING CREDIT -->
+
     <div class="info-row">
 
       <div class="label">
@@ -386,6 +422,8 @@ body {
 
     </div>
 
+
+    <!-- LOGIN TIME -->
 
     <div class="info-row">
 
@@ -400,6 +438,8 @@ body {
     </div>
 
 
+    <!-- SCAN AGAIN -->
+
     <button class="scan-again"
             onclick="resetScanner()">
 
@@ -409,6 +449,7 @@ body {
 
 
   </div>
+
 
 </div>
 
@@ -441,37 +482,57 @@ let processingScan = false;
 
 function startScanner() {
 
+
   document.getElementById("memberCard")
     .classList.remove("show");
+
 
   document.getElementById("error")
     .textContent = "";
 
+
   document.getElementById("status")
-    .textContent = "Scan your Member QR Code";
+    .textContent =
+    "Scan your Member QR Code";
+
 
   document.getElementById("status")
     .classList.add("active");
 
 
-  html5QrCode = new Html5Qrcode("reader");
+  html5QrCode =
+    new Html5Qrcode("reader");
 
 
   const config = {
 
+
     fps: 10,
 
-    qrbox: function(viewfinderWidth, viewfinderHeight) {
 
-      const size =
-        Math.min(viewfinderWidth, viewfinderHeight) * 0.70;
+    qrbox:
+      function(
+        viewfinderWidth,
+        viewfinderHeight
+      ) {
 
-      return {
-        width: size,
-        height: size
-      };
+        const size =
+          Math.min(
+            viewfinderWidth,
+            viewfinderHeight
+          ) * 0.70;
 
-    },
+
+        return {
+
+          width: size,
+
+          height: size
+
+        };
+
+      },
+
 
     aspectRatio: 1.0
 
@@ -479,7 +540,9 @@ function startScanner() {
 
 
   html5QrCode
+
     .start(
+
       {
         facingMode: "environment"
       },
@@ -491,18 +554,24 @@ function startScanner() {
       onScanFailure
 
     )
+
+
     .then(function() {
 
       scannerRunning = true;
 
     })
+
+
     .catch(function(error) {
 
       scannerRunning = false;
 
+
       document.getElementById("error")
         .textContent =
         "Unable to start camera. Please allow camera access.";
+
 
       console.error(error);
 
@@ -517,9 +586,11 @@ function startScanner() {
 
 function onScanSuccess(decodedText) {
 
+
   if (processingScan) {
     return;
   }
+
 
   processingScan = true;
 
@@ -529,19 +600,28 @@ function onScanSuccess(decodedText) {
 
 
   document.getElementById("status")
-    .textContent = "Checking member...";
+    .textContent =
+    "Checking member...";
 
 
   document.getElementById("error")
     .textContent = "";
 
 
-  /* Stop scanner */
+  /* ----------------------------------------------
+     STOP CAMERA
+  ---------------------------------------------- */
 
-  if (html5QrCode && scannerRunning) {
+  if (
+    html5QrCode &&
+    scannerRunning
+  ) {
+
 
     html5QrCode
+
       .stop()
+
       .then(function() {
 
         scannerRunning = false;
@@ -549,6 +629,7 @@ function onScanSuccess(decodedText) {
         lookupMember(memberId);
 
       })
+
       .catch(function() {
 
         scannerRunning = false;
@@ -556,6 +637,7 @@ function onScanSuccess(decodedText) {
         lookupMember(memberId);
 
       });
+
 
   }
 
@@ -574,8 +656,12 @@ function onScanSuccess(decodedText) {
 
 function onScanFailure(error) {
 
-  // Ignore normal scan failures.
-  // QR scanner continuously checks the camera.
+  /*
+    Normal scanner failures are ignored.
+
+    The scanner continuously searches
+    for a QR code.
+  */
 
 }
 
@@ -588,9 +674,8 @@ function lookupMember(memberId) {
 
 
   /*
-    JSONP is used because the GitHub
-    frontend and Apps Script are
-    different domains.
+    JSONP allows the GitHub website
+    to communicate with Apps Script.
   */
 
   const callbackName =
@@ -598,44 +683,133 @@ function lookupMember(memberId) {
     Date.now();
 
 
-  window[callbackName] = function(result) {
+  window[callbackName] =
+    function(result) {
 
 
-    /* Remove script */
+      /* ------------------------------------------
+         REMOVE SCRIPT
+      ------------------------------------------ */
 
-    const script =
-      document.getElementById(callbackName);
-
-
-    if (script) {
-      script.remove();
-    }
-
-
-    /* Remove callback */
-
-    try {
-      delete window[callbackName];
-    }
-
-    catch (e) {
-      window[callbackName] = undefined;
-    }
+      const script =
+        document.getElementById(
+          callbackName
+        );
 
 
-    /* Process result */
+      if (script) {
+        script.remove();
+      }
 
-    if (result && result.success) {
 
-      displayMember(result);
+      /* ------------------------------------------
+         REMOVE CALLBACK
+      ------------------------------------------ */
 
-    }
+      try {
 
-    else {
+        delete window[callbackName];
+
+      }
+
+      catch (e) {
+
+        window[callbackName] =
+          undefined;
+
+      }
+
+
+      /* ------------------------------------------
+         PROCESS RESULT
+      ------------------------------------------ */
+
+      if (
+        result &&
+        result.success
+      ) {
+
+        displayMember(result);
+
+      }
+
+
+      else {
+
+
+        document.getElementById("status")
+          .textContent =
+          "Member not found.";
+
+
+        document.getElementById("status")
+          .classList.remove("active");
+
+
+        document.getElementById("error")
+          .textContent =
+
+          result &&
+          result.message
+
+            ? result.message
+
+            : "Unable to find member.";
+
+
+        processingScan = false;
+
+
+        setTimeout(function() {
+
+          resetScanner();
+
+        }, 2500);
+
+      }
+
+    };
+
+
+  /* ------------------------------------------
+     CREATE JSONP SCRIPT
+  ------------------------------------------ */
+
+  const script =
+    document.createElement("script");
+
+
+  script.id =
+    callbackName;
+
+
+  script.src =
+
+    API_URL +
+
+    "?action=login" +
+
+    "&memberId=" +
+
+    encodeURIComponent(memberId) +
+
+    "&callback=" +
+
+    callbackName;
+
+
+  /* ------------------------------------------
+     CONNECTION ERROR
+  ------------------------------------------ */
+
+  script.onerror =
+    function() {
+
 
       document.getElementById("status")
         .textContent =
-        "Member not found.";
+        "Connection error.";
+
 
       document.getElementById("status")
         .classList.remove("active");
@@ -643,69 +817,29 @@ function lookupMember(memberId) {
 
       document.getElementById("error")
         .textContent =
-        result && result.message
-          ? result.message
-          : "Unable to find member.";
+        "Unable to connect to the member database.";
 
 
       processingScan = false;
 
-      setTimeout(function() {
 
-        resetScanner();
-
-      }, 2500);
-
-    }
-
-  };
+      script.remove();
 
 
-  const script =
-    document.createElement("script");
+      try {
 
+        delete window[callbackName];
 
-  script.id = callbackName;
+      }
 
+      catch (e) {
 
-  script.src =
-    API_URL +
-    "?action=login" +
-    "&memberId=" +
-    encodeURIComponent(memberId) +
-    "&callback=" +
-    callbackName;
+        window[callbackName] =
+          undefined;
 
+      }
 
-  script.onerror = function() {
-
-    document.getElementById("status")
-      .textContent =
-      "Connection error.";
-
-    document.getElementById("status")
-      .classList.remove("active");
-
-
-    document.getElementById("error")
-      .textContent =
-      "Unable to connect to the member database.";
-
-
-    processingScan = false;
-
-
-    script.remove();
-
-    try {
-      delete window[callbackName];
-    }
-
-    catch (e) {
-      window[callbackName] = undefined;
-    }
-
-  };
+    };
 
 
   document.body.appendChild(script);
@@ -720,65 +854,84 @@ function lookupMember(memberId) {
 function displayMember(result) {
 
 
+  /* ----------------------------------------------
+     MEMBER NAME
+  ---------------------------------------------- */
+
   document.getElementById("memberName")
     .textContent =
     result.name || "N/A";
 
+
+  /* ----------------------------------------------
+     MEMBER ID
+  ---------------------------------------------- */
 
   document.getElementById("memberId")
     .textContent =
     result.memberId || "N/A";
 
 
-  document.getElementById("contact")
-    .textContent =
-    result.contact || "N/A";
-
-
-  /* ==================================================
+  /* ----------------------------------------------
      CREDITS
-  ================================================== */
+  ---------------------------------------------- */
 
   setCreditValue(
+
     "annualCredit",
+
     result.annualCredit,
+
     " Credit"
+
   );
 
 
   setCreditValue(
+
     "workoutCredit",
+
     result.workoutCredit,
+
     " Credit"
+
   );
 
 
   setCreditValue(
+
     "lockerCredit",
+
     result.lockerCredit,
+
     " Credit"
+
   );
 
 
   setCreditValue(
+
     "professionalTrainingCredit",
+
     result.professionalTrainingCredit,
+
     " Credit"
+
   );
 
 
-  /* ==================================================
+  /* ----------------------------------------------
      LOGIN TIME
-  ================================================== */
+  ---------------------------------------------- */
 
   document.getElementById("loginTime")
     .textContent =
     result.timestamp || "N/A";
 
 
-  /* ==================================================
+  /* ----------------------------------------------
      SHOW MEMBER CARD
-  ================================================== */
+  ---------------------------------------------- */
 
   document.getElementById("memberCard")
     .classList.add("show");
@@ -787,6 +940,7 @@ function displayMember(result) {
   document.getElementById("status")
     .textContent =
     "Login Successful";
+
 
   document.getElementById("status")
     .classList.remove("active");
@@ -806,31 +960,43 @@ function displayMember(result) {
 ================================================== */
 
 function setCreditValue(
+
   elementId,
+
   value,
+
   suffix
+
 ) {
 
+
   const element =
-    document.getElementById(elementId);
+    document.getElementById(
+      elementId
+    );
 
 
-  /* Remove previous warning */
+  /* ----------------------------------------------
+     REMOVE PREVIOUS BLINK
+  ---------------------------------------------- */
 
-  element.classList.remove("zero-value");
+  element.classList.remove(
+    "zero-value"
+  );
 
 
-  /*
-    Handle empty values.
-
-    If Apps Script returns an empty
-    BF value, show N/A.
-  */
+  /* ----------------------------------------------
+     EMPTY VALUE
+  ---------------------------------------------- */
 
   if (
+
     value === undefined ||
+
     value === null ||
+
     value === ""
+
   ) {
 
     element.textContent = "N/A";
@@ -840,16 +1006,20 @@ function setCreditValue(
   }
 
 
-  /*
-    Special text values such as:
+  /* ----------------------------------------------
+     SPECIAL TEXT
 
-    No PT
-    No Locker
-  */
+     Example:
+     No PT
+     No Locker
+  ---------------------------------------------- */
 
   if (
+
     typeof value === "string" &&
+
     isNaN(value)
+
   ) {
 
     element.textContent = value;
@@ -859,9 +1029,9 @@ function setCreditValue(
   }
 
 
-  /*
-    Convert to number when possible
-  */
+  /* ----------------------------------------------
+     NUMERIC VALUE
+  ---------------------------------------------- */
 
   const numberValue =
     Number(value);
@@ -869,23 +1039,27 @@ function setCreditValue(
 
   if (!isNaN(numberValue)) {
 
+
     element.textContent =
       numberValue + suffix;
 
 
-    /*
-      Zero credit:
+    /* ------------------------------------------
+       ZERO CREDIT
 
-      RED + BLINK
-    */
+       RED + BLINK
+    ------------------------------------------ */
 
     if (numberValue === 0) {
 
-      element.classList.add("zero-value");
+      element.classList.add(
+        "zero-value"
+      );
 
     }
 
   }
+
 
   else {
 
@@ -904,13 +1078,17 @@ function setCreditValue(
 function resetScanner() {
 
 
-  /* Hide member card */
+  /* ----------------------------------------------
+     HIDE MEMBER CARD
+  ---------------------------------------------- */
 
   document.getElementById("memberCard")
     .classList.remove("show");
 
 
-  /* Reset status */
+  /* ----------------------------------------------
+     RESET STATUS
+  ---------------------------------------------- */
 
   document.getElementById("status")
     .textContent =
@@ -921,58 +1099,76 @@ function resetScanner() {
     .classList.add("active");
 
 
-  /* Clear error */
+  /* ----------------------------------------------
+     CLEAR ERROR
+  ---------------------------------------------- */
 
   document.getElementById("error")
     .textContent = "";
 
 
-  /* Clear member information */
+  /* ----------------------------------------------
+     CLEAR MEMBER DATA
+  ---------------------------------------------- */
 
   document.getElementById("memberName")
     .textContent = "";
 
+
   document.getElementById("memberId")
     .textContent = "";
 
-  document.getElementById("contact")
-    .textContent = "";
 
   document.getElementById("annualCredit")
     .textContent = "";
 
+
   document.getElementById("workoutCredit")
     .textContent = "";
+
 
   document.getElementById("lockerCredit")
     .textContent = "";
 
-  document.getElementById("professionalTrainingCredit")
+
+  document.getElementById(
+    "professionalTrainingCredit"
+  )
     .textContent = "";
+
 
   document.getElementById("loginTime")
     .textContent = "";
 
 
-  /* Remove zero blinking */
+  /* ----------------------------------------------
+     REMOVE ZERO BLINK
+  ---------------------------------------------- */
 
   document.getElementById("annualCredit")
     .classList.remove("zero-value");
 
+
   document.getElementById("workoutCredit")
     .classList.remove("zero-value");
+
 
   document.getElementById("lockerCredit")
     .classList.remove("zero-value");
 
-  document.getElementById("professionalTrainingCredit")
+
+  document.getElementById(
+    "professionalTrainingCredit"
+  )
     .classList.remove("zero-value");
 
 
   processingScan = false;
 
 
-  /* Start scanner again */
+  /* ----------------------------------------------
+     START SCANNER AGAIN
+  ---------------------------------------------- */
 
   startScanner();
 
@@ -984,12 +1180,15 @@ function resetScanner() {
 ================================================== */
 
 window.addEventListener(
+
   "load",
+
   function() {
 
     startScanner();
 
   }
+
 );
 
 </script>
