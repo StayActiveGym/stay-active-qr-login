@@ -722,6 +722,30 @@ button:active {
 
 
     <!-- ==========================================
+         PROFESSIONAL TRAINING
+    =========================================== -->
+
+    <div class="info-row">
+
+      <div class="label">
+
+        Professional Training Credit
+
+      </div>
+
+
+      <div
+        class="value"
+        id="professionalTrainingCredit">
+
+        N/A
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
          LOGIN TIME
     =========================================== -->
 
@@ -1284,6 +1308,21 @@ function displayMember(result) {
 
 
   /*
+  PROFESSIONAL TRAINING CREDIT
+  */
+
+  setCreditValue(
+
+    "professionalTrainingCredit",
+
+    result.professionalTrainingCredit,
+
+    " Credit"
+
+  );
+
+
+  /*
   LOGIN TIME
   */
 
@@ -1396,6 +1435,13 @@ function resetScanner() {
 
   document.getElementById(
     "lockerCredit"
+  ).classList.remove(
+    "zero-value"
+  );
+
+
+  document.getElementById(
+    "professionalTrainingCredit"
   ).classList.remove(
     "zero-value"
   );
